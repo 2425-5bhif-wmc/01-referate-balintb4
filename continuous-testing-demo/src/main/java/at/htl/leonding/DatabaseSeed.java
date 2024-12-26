@@ -14,6 +14,7 @@ public class DatabaseSeed {
     @Inject
     EntityManager em;
 
+
     @Transactional
     void startup(@Observes StartupEvent ev) {
         Address address1 = new Address("Main Street 1", "Vienna", "1010");
