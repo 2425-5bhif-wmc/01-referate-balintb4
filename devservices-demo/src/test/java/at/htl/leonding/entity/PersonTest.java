@@ -20,7 +20,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
             person.setHoursWorked(40);
             person.setHourlyWage(20);
 
-            assertThat(person.calculateSalary()).isEqualTo(800);
+            assertThat(person.calculateSalary()).isEqualTo(8000);
         }
     }
 
