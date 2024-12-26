@@ -29,5 +29,6 @@ public class DatabaseSeed {
         em.persist(person2);
         em.persist(person3);
 
+
     }
 }

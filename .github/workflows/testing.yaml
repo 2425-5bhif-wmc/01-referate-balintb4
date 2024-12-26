@@ -25,23 +25,27 @@ jobs:
           cache: 'maven'
           cache-dependency-path: 'continuous-testing-demo/pom.xml'
 
-      - name: Start SSH Agent
-        uses: webfactory/ssh-agent@v0.7.0
-        with:
-          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
-
-      - name: Add remote host to known_hosts
+      - name: Install docker compose
         run: |
-          mkdir -p ~/.ssh
-          ssh-keyscan ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
+          sudo apt-get update
+          sudo apt-get install -y docker-compose-plugin
 
-      - name: Create SSH Tunnel
+      - name: Start PostgreSQL Database
+        run: docker compose -f docker-compose-db.yml up -d
+
+      - name: Wait for database to be ready
         run: |
-          ssh -f -N -L 5432:localhost:5432 ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} -o StrictHostKeyChecking=no
-          sleep 3 # Give the tunnel some time to establish (adjust if necessary)
+          until docker compose -f docker-compose-db.yml exec db pg_isready; do
+            echo "Waiting for database to be ready..."
+            sleep 1
+          done
 
       - name: Set execute permission for the test script
         run: chmod +x .github/cicd/execute-test.sh
 
       - name: Execute test script
+        env: # Setze Umgebungsvariablen für die Verbindung zur DB
+          SPRING_DATASOURCE_URL: jdbc:postgresql://localhost:5432/db
+          SPRING_DATASOURCE_USERNAME: app
+          SPRING_DATASOURCE_PASSWORD: app
         run: ./.github/cicd/execute-test.sh
