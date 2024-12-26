@@ -1,4 +1,4 @@
-name: Build Mqtt-demo-server
+name: Test devservices-demo
 
 on:
   push:
@@ -23,7 +23,7 @@ jobs:
           distribution: 'temurin'
           java-version: '21'
           cache: 'maven'
-          cache-dependency-path: 'backend-jpa/pom.xml'
+          cache-dependency-path: 'devservices-demo/pom.xml'
 
       - name: Set execute permission for the test script
         run: chmod +x cicd/executeTest.sh

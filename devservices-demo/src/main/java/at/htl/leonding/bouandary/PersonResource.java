@@ -30,6 +30,7 @@ public class PersonResource {
         if (person == null) {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
+
         return Response.ok(person).build();
     }
 
