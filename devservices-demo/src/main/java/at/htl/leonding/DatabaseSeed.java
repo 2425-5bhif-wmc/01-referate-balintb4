@@ -1,6 +1,7 @@
 package at.htl.leonding;
 
 import at.htl.leonding.entity.Person;
+import at.htl.leonding.entity.Address;
 import io.quarkus.runtime.StartupEvent;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.event.Observes;
@@ -12,13 +13,19 @@ import jakarta.transaction.Transactional;
 public class DatabaseSeed {
     @Inject
     EntityManager em;
+
     @Transactional
     void startup(@Observes StartupEvent ev) {
-        Person person = new Person("johndoe2@gmail.com",22,"doe","john");
-        Person person2 = new Person("marryjoe@gmail.com",25,"doe","marry");
-        Person person3 = new Person("foodoe2@gmail.com",29,"doe","foo");
+        Address address1 = new Address("Main Street 1", "Vienna", "1010");
+        Address address2 = new Address("High Street 5", "Salzburg", "5020");
+        Address address3 = new Address("Broadway 10", "Linz", "4020");
 
-        em.persist(person);
+        Person person1 = new Person("John", "Doe", 30, "johndoe@gmail.com", 40, 20, address1);
+        Person person2 = new Person("Marry", "Joe", 25, "marryjoe@gmail.com", 35, 18, address2);
+        Person person3 = new Person("Foo", "Doe", 29, "foodoe@gmail.com", 45, 25, address3);
+
+        // Persistiere die Objekte
+        em.persist(person1);
         em.persist(person2);
         em.persist(person3);
     }

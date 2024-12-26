@@ -1,22 +1,36 @@
 package at.htl.leonding.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+
+import java.util.Objects;
 
 @Entity
 public class Person {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
     private String firstName;
     private String lastName;
     private int age;
     private String email;
+    private int hoursWorked;
+    private int hourlyWage;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "address_id")
+    private Address address;
 
     public Person() {
+    }
+
+    public Person(String firstName, String lastName, int age, String email, int hoursWorked, int hourlyWage, Address address) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.age = age;
+        this.email = email;
+        this.hoursWorked = hoursWorked;
+        this.hourlyWage = hourlyWage;
+        this.address = address;
     }
 
     public Person(Long id, String firstName, String lastName, int age, String email) {
@@ -27,11 +41,17 @@ public class Person {
         this.email = email;
     }
 
-    public Person(String email, int age, String lastName, String firstName) {
-        this.email = email;
-        this.age = age;
-        this.lastName = lastName;
-        this.firstName = firstName;
+
+    public int calculateSalary() {
+        return hoursWorked * hourlyWage;
+    }
+
+    public boolean isValid() {
+        return firstName != null && !firstName.isEmpty() &&
+                lastName != null && !lastName.isEmpty() &&
+                age > 0 &&
+                email != null && !email.isEmpty() &&
+                address != null && address.isValid();
     }
 
     public String getFirstName() {
@@ -72,6 +92,42 @@ public class Person {
 
     public Long getId() {
         return id;
+    }
+
+
+    public int getHoursWorked() {
+        return hoursWorked;
+    }
+
+    public void setHoursWorked(int hoursWorked) {
+        this.hoursWorked = hoursWorked;
+    }
+
+    public int getHourlyWage() {
+        return hourlyWage;
+    }
+
+    public void setHourlyWage(int hourlyWage) {
+        this.hourlyWage = hourlyWage;
+    }
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof Person person)) return false;
+        return getAge() == person.getAge() && getHoursWorked() == person.getHoursWorked() && getHourlyWage() == person.getHourlyWage() && Objects.equals(getId(), person.getId()) && Objects.equals(getFirstName(), person.getFirstName()) && Objects.equals(getLastName(), person.getLastName()) && Objects.equals(getEmail(), person.getEmail()) && Objects.equals(getAddress(), person.getAddress());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getFirstName(), getLastName(), getAge(), getEmail(), getHoursWorked(), getHourlyWage(), getAddress());
     }
 
     @Override
