@@ -12,7 +12,7 @@ class PersonResourceTest {
     @Test
     public void testGetAllPersons() {
         Response response = given()
-                .when().get("/persons")
+                .when().get("/person/all")
                 .then()
                 .statusCode(200)
                 .extract().response();
@@ -27,7 +27,7 @@ class PersonResourceTest {
 
         Response response = given()
                 .queryParam("id", personId)
-                .when().get("/persons/id")
+                .when().get("/person/{id}", personId)
                 .then()
                 .statusCode(200)
                 .extract().response();
