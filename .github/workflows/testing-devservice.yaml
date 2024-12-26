@@ -26,7 +26,7 @@ jobs:
           cache-dependency-path: 'devservices-demo/pom.xml'
 
       - name: Set execute permission for the test script
-        run: chmod +x .github/cicd/executeTest.sh
+        run: chmod +x .github/cicd/execute-test-devservices.sh
 
       - name: Execute test script
-        run: ./.github/cicd/executeTest.sh
+        run: ./.github/cicd/execute-test-devservices.sh
