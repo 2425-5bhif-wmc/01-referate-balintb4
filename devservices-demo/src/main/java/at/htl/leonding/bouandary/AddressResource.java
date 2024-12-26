@@ -26,6 +26,7 @@ public class AddressResource {
     @GET
     @Path("/{id}")
     public Response getAddressById(@PathParam("id") Long id) {
+
         Address address = addressRepository.findById(id);
         if (address == null) {
             return Response.status(Response.Status.NOT_FOUND).build();
