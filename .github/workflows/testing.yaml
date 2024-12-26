@@ -1,0 +1,32 @@
+name: Test continuous-testing-demo
+
+on:
+  push:
+    paths:
+      - 'continuous-testing-demo/**'
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build-backend:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+          cache: 'maven'
+          cache-dependency-path: 'continuous-testing-demo/pom.xml'
+
+      - name: Set execute permission for the test script
+        run: chmod +x .github/cicd/executeTest.sh
+
+      - name: Execute test script
+        run: ./.github/cicd/executeTest.sh
