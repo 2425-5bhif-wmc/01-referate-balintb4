@@ -23,6 +23,7 @@ public class Address {
         this.zipCode = zipCode;
     }
 
+
     public double calculateShippingCost() {
         // Angenommen, für jede Postleitzahl gibt es einen festgelegten Preis.
         if (this.zipCode.startsWith("40")) {
