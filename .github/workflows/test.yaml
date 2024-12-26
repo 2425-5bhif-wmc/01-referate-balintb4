@@ -23,13 +23,10 @@ jobs:
           distribution: 'temurin'
           java-version: '21'
           cache: 'maven'
-          cache-dependency-path: 'devservices-demo/pom.xml'
+          cache-dependency-path: 'pom.xml,devservices-demo/pom.xml'
 
       - name: Set execute permission for the test script
         run: chmod +x cicd/executeTest.sh
 
       - name: Execute test script
         run: ./cicd/executeTest.sh
-
-
-
