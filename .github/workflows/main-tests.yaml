@@ -39,11 +39,11 @@ jobs:
           done
 
       - name: Set execute permission for the test script
-        run: chmod +x .github/cicd/execute-test.sh
+        run: chmod +x .github/cicd/run-test.sh
 
       - name: Execute test script
         env: # Setze Umgebungsvariablen für die Verbindung zur DB
           SPRING_DATASOURCE_URL: jdbc:postgresql://localhost:5432/db
           SPRING_DATASOURCE_USERNAME: app
           SPRING_DATASOURCE_PASSWORD: app
-        run: ./.github/cicd/execute-test.sh
+        run: ./.github/cicd/run-test.sh
