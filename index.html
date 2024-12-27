@@ -5,8 +5,9 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.20">
+<meta name="author" content="Erstellt von: Balint Balazs">
 <link rel="icon" type="image/png" href="themes/favicon.png">
-<title>Index page</title>
+<title>Quarkus-Anwendung mit PostgreSQL und Dev Services</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /*! Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
@@ -435,6 +436,120 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <style>
+pre.rouge table td { padding: 5px; }
+pre.rouge table pre { margin: 0; }
+pre.rouge, pre.rouge .w {
+  color: #24292f;
+  background-color: #f6f8fa;
+}
+pre.rouge .k, pre.rouge .kd, pre.rouge .kn, pre.rouge .kp, pre.rouge .kr, pre.rouge .kt, pre.rouge .kv {
+  color: #cf222e;
+}
+pre.rouge .gr {
+  color: #f6f8fa;
+}
+pre.rouge .gd {
+  color: #82071e;
+  background-color: #ffebe9;
+}
+pre.rouge .nb {
+  color: #953800;
+}
+pre.rouge .nc {
+  color: #953800;
+}
+pre.rouge .no {
+  color: #953800;
+}
+pre.rouge .nn {
+  color: #953800;
+}
+pre.rouge .sr {
+  color: #116329;
+}
+pre.rouge .na {
+  color: #116329;
+}
+pre.rouge .nt {
+  color: #116329;
+}
+pre.rouge .gi {
+  color: #116329;
+  background-color: #dafbe1;
+}
+pre.rouge .kc {
+  color: #0550ae;
+}
+pre.rouge .l, pre.rouge .ld, pre.rouge .m, pre.rouge .mb, pre.rouge .mf, pre.rouge .mh, pre.rouge .mi, pre.rouge .il, pre.rouge .mo, pre.rouge .mx {
+  color: #0550ae;
+}
+pre.rouge .sb {
+  color: #0550ae;
+}
+pre.rouge .bp {
+  color: #0550ae;
+}
+pre.rouge .ne {
+  color: #0550ae;
+}
+pre.rouge .nl {
+  color: #0550ae;
+}
+pre.rouge .py {
+  color: #0550ae;
+}
+pre.rouge .nv, pre.rouge .vc, pre.rouge .vg, pre.rouge .vi, pre.rouge .vm {
+  color: #0550ae;
+}
+pre.rouge .o, pre.rouge .ow {
+  color: #0550ae;
+}
+pre.rouge .gh {
+  color: #0550ae;
+  font-weight: bold;
+}
+pre.rouge .gu {
+  color: #0550ae;
+  font-weight: bold;
+}
+pre.rouge .s, pre.rouge .sa, pre.rouge .sc, pre.rouge .dl, pre.rouge .sd, pre.rouge .s2, pre.rouge .se, pre.rouge .sh, pre.rouge .sx, pre.rouge .s1, pre.rouge .ss {
+  color: #0a3069;
+}
+pre.rouge .nd {
+  color: #8250df;
+}
+pre.rouge .nf, pre.rouge .fm {
+  color: #8250df;
+}
+pre.rouge .err {
+  color: #f6f8fa;
+  background-color: #82071e;
+}
+pre.rouge .c, pre.rouge .ch, pre.rouge .cd, pre.rouge .cm, pre.rouge .cp, pre.rouge .cpf, pre.rouge .c1, pre.rouge .cs {
+  color: #6e7781;
+}
+pre.rouge .gl {
+  color: #6e7781;
+}
+pre.rouge .gt {
+  color: #6e7781;
+}
+pre.rouge .ni {
+  color: #24292f;
+}
+pre.rouge .si {
+  color: #24292f;
+}
+pre.rouge .ge {
+  color: #24292f;
+  font-style: italic;
+}
+pre.rouge .gs {
+  color: #24292f;
+  font-weight: bold;
+}
+</style>
+<style>
     pre.rouge .hll {
         background-color: #ffc;
         display: block;
@@ -444,20 +559,366 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
     }
 </style>
 </head>
-<body class="article">
+<body class="article toc2 toc-left">
 <div id="header">
-<h1>Index page</h1>
+<h1>Quarkus-Anwendung mit PostgreSQL und Dev Services</h1>
+<div class="details">
+<span id="author" class="author">Erstellt von: Balint Balazs</span><br>
+<span id="revdate">Version</span>
+<br><span id="revremark">1.0</span>
+</div>
+<div id="toc" class="toc2">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#_voraussetzungen">1. Voraussetzungen</a></li>
+<li><a href="#_projekt_erstellen">2. Projekt erstellen</a></li>
+<li><a href="#_abhängigkeiten">3. Abhängigkeiten</a></li>
+<li><a href="#_konfiguration_der_postgresql_datenbank">4. Konfiguration der PostgreSQL-Datenbank</a>
+<ul class="sectlevel2">
+<li><a href="#_quarkus_datenbank_konfiguration">4.1. Quarkus Datenbank Konfiguration</a></li>
+<li><a href="#_erklärung">4.2. Erklärung</a></li>
+</ul>
+</li>
+<li><a href="#_erstellen_der_person_entität">5. Erstellen der <code>Person</code>-Entität</a></li>
+<li><a href="#_erstellen_eines_rest_endpunkts">6. Erstellen eines REST Endpunkts</a>
+<ul class="sectlevel2">
+<li><a href="#_erklärung_2">6.1. Erklärung:</a></li>
+<li><a href="#_erklärung_3">6.2. Erklärung:</a></li>
+</ul>
+</li>
+<li><a href="#_7_anwendung_starten">7. 7. Anwendung starten</a></li>
+<li><a href="#_zusammenfassung">8. Zusammenfassung</a></li>
+</ul>
+</div>
 </div>
 <div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Datum: 2024-12-09</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_voraussetzungen"><a class="anchor" href="#_voraussetzungen"></a>1. Voraussetzungen</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Bevor du beginnst, stelle sicher, dass du die folgenden Tools installiert hast:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Java 17</strong> oder höher</p>
+</li>
+<li>
+<p><strong>Maven</strong></p>
+</li>
+<li>
+<p><strong>Docker</strong> (für die Ausführung von Dev Services)</p>
+</li>
+<li>
+<p><strong>PostgreSQL</strong> (für den direkten Zugriff, wenn nötig)</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_projekt_erstellen"><a class="anchor" href="#_projekt_erstellen"></a>2. Projekt erstellen</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Erstelle ein neues Quarkus-Projekt</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_abhängigkeiten"><a class="anchor" href="#_abhängigkeiten"></a>3. Abhängigkeiten</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Stelle sicher, dass die folgenden Abhängigkeiten
+in deiner pom.xml (für Maven) enthalten sind:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="xml"><span class="nt">&lt;dependencies&gt;</span>
+<span class="c">&lt;!-- Quarkus RESTEasy für REST APIs --&gt;</span>
+<span class="nt">&lt;dependency&gt;</span>
+<span class="nt">&lt;groupId&gt;</span>io.quarkus<span class="nt">&lt;/groupId&gt;</span>
+<span class="nt">&lt;artifactId&gt;</span>quarkus-resteasy<span class="nt">&lt;/artifactId&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+
+    <span class="c">&lt;!-- Quarkus Hibernate ORM für die Datenbankintegration --&gt;</span>
+    <span class="nt">&lt;dependency&gt;</span>
+        <span class="nt">&lt;groupId&gt;</span>io.quarkus<span class="nt">&lt;/groupId&gt;</span>
+        <span class="nt">&lt;artifactId&gt;</span>quarkus-hibernate-orm-panache<span class="nt">&lt;/artifactId&gt;</span>
+    <span class="nt">&lt;/dependency&gt;</span>
+
+    <span class="c">&lt;!-- PostgreSQL JDBC-Treiber --&gt;</span>
+    <span class="nt">&lt;dependency&gt;</span>
+        <span class="nt">&lt;groupId&gt;</span>org.postgresql<span class="nt">&lt;/groupId&gt;</span>
+        <span class="nt">&lt;artifactId&gt;</span>postgresql<span class="nt">&lt;/artifactId&gt;</span>
+    <span class="nt">&lt;/dependency&gt;</span>
+<span class="nt">&lt;/dependencies&gt;</span></code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_konfiguration_der_postgresql_datenbank"><a class="anchor" href="#_konfiguration_der_postgresql_datenbank"></a>4. Konfiguration der PostgreSQL-Datenbank</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Quarkus Dev Services
+wird automatisch eine PostgreSQL-Datenbank für dich starten.
+Du musst jedoch die Verbindungsdetails in der Konfiguration festlegen.
+Öffne die Datei <code>src/main/resources/application.properties</code>
+und füge die folgenden Konfigurationen hinzu:</p>
+</div>
+<div class="sect2">
+<h3 id="_quarkus_datenbank_konfiguration"><a class="anchor" href="#_quarkus_datenbank_konfiguration"></a>4.1. Quarkus Datenbank Konfiguration</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="properties"><span class="py">quarkus.datasource.db-kind</span><span class="p">=</span><span class="s">postgresql </span><i class="conum" data-value="1"></i><b>(1)</b>
+<span class="py">quarkus.datasource.username</span><span class="p">=</span><span class="s">your_username </span><i class="conum" data-value="2"></i><b>(2)</b>
+<span class="py">quarkus.datasource.password</span><span class="p">=</span><span class="s">your_password </span><i class="conum" data-value="3"></i><b>(3)</b>
+
+<span class="py">quarkus.hibernate-orm.database.generation</span><span class="p">=</span><span class="s">update </span><i class="conum" data-value="4"></i><b>(4)</b>
+<span class="py">quarkus.hibernate-orm.log.sql</span><span class="p">=</span><span class="s">true </span><i class="conum" data-value="5"></i><b>(5)</b>
+<span class="py">quarkus.hibernate-orm.log.format-sql</span><span class="p">=</span><span class="s">true </span><i class="conum" data-value="6"></i><b>(6)</b>
+
+<span class="py">quarkus.datasource.devservices.enabled</span><span class="p">=</span><span class="s">true </span><i class="conum" data-value="7"></i><b>(7)</b>
+<span class="py">quarkus.datasource.devservices.image-name</span><span class="p">=</span><span class="s">postgres:latest </span><i class="conum" data-value="8"></i><b>(8)</b></code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_erklärung"><a class="anchor" href="#_erklärung"></a>4.2. Erklärung</h3>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Gibt an, dass PostgreSQL als Datenbank verwendet wird.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Der Benutzername für den PostgreSQL-Datenbankzugriff.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>Das Passwort für den PostgreSQL-Datenbankzugriff.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>Sagt Hibernate, dass es die Datenbankstruktur beim Start aktualisieren soll.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td>Aktiviert das SQL-Logging, damit SQL-Abfragen im Log sichtbar sind.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="6"></i><b>6</b></td>
+<td>Formatiert SQL-Abfragen für bessere Lesbarkeit im Log.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="7"></i><b>7</b></td>
+<td>Aktiviert Dev Services, die eine Datenbank im Docker-Container starten.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="8"></i><b>8</b></td>
+<td>Gibt das Docker-Image für PostgreSQL an, das verwendet werden soll.</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_erstellen_der_person_entität"><a class="anchor" href="#_erstellen_der_person_entität"></a>5. Erstellen der <code>Person</code>-Entität</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Nun erstellst du eine Entität, die du in der Datenbank speichern möchtest.
+Erstelle die Datei <code>src/main/java/com/example/model/Person.java</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="java"><span class="kn">package</span> <span class="nn">com.example.model</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">io.quarkus.hibernate.orm.panache.PanacheEntity</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">javax.persistence.Entity</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">javax.persistence.Table</span><span class="o">;</span>
+
+<span class="nd">@Entity</span>
+<span class="nd">@Table</span><span class="o">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">"person"</span><span class="o">)</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Person</span> <span class="kd">extends</span> <span class="nc">PanacheEntity</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="nc">String</span> <span class="n">firstName</span><span class="o">;</span>
+    <span class="kd">public</span> <span class="nc">String</span> <span class="n">lastName</span><span class="o">;</span>
+    <span class="kd">public</span> <span class="nc">String</span> <span class="n">email</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="nf">Person</span><span class="o">()</span> <span class="o">{</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="nf">Person</span><span class="o">(</span><span class="nc">String</span> <span class="n">firstName</span><span class="o">,</span> <span class="nc">String</span> <span class="n">lastName</span><span class="o">,</span> <span class="nc">String</span> <span class="n">email</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">firstName</span> <span class="o">=</span> <span class="n">firstName</span><span class="o">;</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">lastName</span> <span class="o">=</span> <span class="n">lastName</span><span class="o">;</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">email</span> <span class="o">=</span> <span class="n">email</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Die Klasse Person erweitert PanacheEntity, wodurch Quarkus automatisch CRUD-Operationen für diese Entität bereitstellt.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_erstellen_eines_rest_endpunkts"><a class="anchor" href="#_erstellen_eines_rest_endpunkts"></a>6. Erstellen eines REST Endpunkts</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Erstelle nun einen REST-Endpunkt, um die Entitäten über eine API verfügbar zu machen. Erstelle die Datei src/main/java/com/example/resource/PersonResource.java:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="java"><span class="kn">package</span> <span class="nn">com.example.resource</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">com.example.model.Person</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">javax.ws.rs.GET</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">javax.ws.rs.Path</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">javax.ws.rs.Produces</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">javax.ws.rs.core.MediaType</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">javax.ws.rs.core.Response</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">javax.inject.Inject</span><span class="o">;</span>
+
+<span class="nd">@Path</span><span class="o">(</span><span class="s">"/persons"</span><span class="o">)</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">PersonResource</span> <span class="o">{</span>
+
+    <span class="nd">@Inject</span>
+    <span class="nc">PersonRepository</span> <span class="n">personRepository</span><span class="o">;</span>
+
+    <span class="nd">@GET</span>
+    <span class="nd">@Path</span><span class="o">(</span><span class="s">"/all"</span><span class="o">)</span>
+    <span class="nd">@Produces</span><span class="o">(</span><span class="nc">MediaType</span><span class="o">.</span><span class="na">APPLICATION_JSON</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="nc">Response</span> <span class="nf">getAllPersons</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">personRepository</span><span class="o">.</span><span class="na">count</span><span class="o">()</span> <span class="o">==</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">return</span> <span class="nc">Response</span><span class="o">.</span><span class="na">status</span><span class="o">(</span><span class="nc">Response</span><span class="o">.</span><span class="na">Status</span><span class="o">.</span><span class="na">NOT_FOUND</span><span class="o">).</span><span class="na">build</span><span class="o">();</span>
+        <span class="o">}</span>
+        <span class="k">return</span> <span class="nc">Response</span><span class="o">.</span><span class="na">ok</span><span class="o">(</span><span class="n">personRepository</span><span class="o">.</span><span class="na">findAll</span><span class="o">()).</span><span class="na">build</span><span class="o">();</span>
+    <span class="o">}</span>
+<span class="o">}</span></code></pre>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_erklärung_2"><a class="anchor" href="#_erklärung_2"></a>6.1. Erklärung:</h3>
+<div class="paragraph">
+<p>Dieser Endpunkt liefert alle Person-Entitäten als JSON zurück.
+== 6. Optional: Datenbank mit DatabaseSeed initialisieren</p>
+</div>
+<div class="paragraph">
+<p>Um einige Daten beim Start der Anwendung zu erstellen, kannst du eine DatabaseSeed-Klasse hinzufügen, die beim Start der Anwendung Daten in die Datenbank einfügt.</p>
+</div>
+<div class="paragraph">
+<p>Erstelle die Datei src/main/java/com/example/DatabaseSeed.java:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="java"><table class="linenotable"><tbody><tr><td class="linenos gl"><pre class="lineno"> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+</pre></td><td class="code"><pre><span class="kn">package</span> <span class="nn">com.example</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">com.example.model.Person</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">io.quarkus.runtime.StartupEvent</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">javax.enterprise.context.ApplicationScoped</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">javax.enterprise.event.Observes</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">javax.inject.Inject</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">javax.transaction.Transactional</span><span class="o">;</span>
+
+<span class="nd">@ApplicationScoped</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">DatabaseSeed</span> <span class="o">{</span>
+
+    <span class="nd">@Inject</span>
+    <span class="nc">PersonRepository</span> <span class="n">personRepository</span><span class="o">;</span>
+
+    <span class="nd">@Transactional</span>
+    <span class="kt">void</span> <span class="nf">onStart</span><span class="o">(</span><span class="nd">@Observes</span> <span class="nc">StartupEvent</span> <span class="n">ev</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">personRepository</span><span class="o">.</span><span class="na">count</span><span class="o">()</span> <span class="o">==</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">personRepository</span><span class="o">.</span><span class="na">persist</span><span class="o">(</span><span class="k">new</span> <span class="nc">Person</span><span class="o">(</span><span class="s">"John"</span><span class="o">,</span> <span class="s">"Doe"</span><span class="o">,</span> <span class="s">"john.doe@example.com"</span><span class="o">));</span>
+            <span class="n">personRepository</span><span class="o">.</span><span class="na">persist</span><span class="o">(</span><span class="k">new</span> <span class="nc">Person</span><span class="o">(</span><span class="s">"Jane"</span><span class="o">,</span> <span class="s">"Doe"</span><span class="o">,</span> <span class="s">"jane.doe@example.com"</span><span class="o">));</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></td></tr></tbody></table></code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_erklärung_3"><a class="anchor" href="#_erklärung_3"></a>6.2. Erklärung:</h3>
+<div class="paragraph">
+<p>Diese Klasse fügt beim Start der Anwendung einige Person-Entitäten hinzu, wenn noch keine vorhanden sind.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_7_anwendung_starten"><a class="anchor" href="#_7_anwendung_starten"></a>7. 7. Anwendung starten</h2>
+<div class="sectionbody">
+<div class="literalblock">
+<div class="content">
+<pre>mvn quarkus:dev</pre>
+</div>
+</div>
+<details>
+<summary class="title">Result</summary>
+<div class="content">
 <div class="imageblock">
 <div class="content">
-<img src="images/img.png" alt="img">
+<img src="images/images/img_2.png" alt="img 2">
+</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/images/img_1.png" alt="img 1">
+</div>
+</div>
+</div>
+</details>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_zusammenfassung"><a class="anchor" href="#_zusammenfassung"></a>8. Zusammenfassung</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>In dieser Anleitung haben wir eine Quarkus-Anwendung
+mit einer PostgreSQL-Datenbank erstellt,
+die von Quarkus Dev Services automatisch verwaltet wird.
+Wir haben eine einfache REST-API erstellt,
+um mit der Datenbank zu interagieren, und beim Start der Anwendung einige Daten eingefügt. Die Verwendung von Dev Services macht das Setup der Datenbank sehr einfach, ohne dass du manuell Docker-Container oder PostgreSQL installieren musst.</p>
+</div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2024-12-09 23:30:16 UTC
+Last updated 2024-12-27 13:32:51 UTC
 </div>
 </div>
 </body>
