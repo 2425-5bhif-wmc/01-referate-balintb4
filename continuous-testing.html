@@ -5,8 +5,9 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.20">
+<meta name="author" content="Balint Balazs">
 <link rel="icon" type="image/png" href="themes/favicon.png">
-<title>Untitled</title>
+<title>Continuous Testing</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /*! Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
@@ -444,15 +445,377 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
     }
 </style>
 </head>
-<body class="article">
+<body class="book toc2 toc-left">
 <div id="header">
+<h1>Continuous Testing</h1>
+<div class="details">
+<span id="author" class="author">Balint Balazs</span><br>
+<span id="revnumber">version 1.1,</span>
+<span id="revdate">2024-01-11</span>
+</div>
+<div id="toc" class="toc2">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#_was_ist_continuous_testing">1. Was ist Continuous Testing?</a></li>
+<li><a href="#_hauptkomponenten_von_continuous_testing">2. Hauptkomponenten von Continuous Testing</a></li>
+<li><a href="#_arten_von_tests_im_continuous_testing">3. Arten von Tests im Continuous Testing</a></li>
+<li><a href="#_herausforderungen_beim_continuous_testing">4. Herausforderungen beim Continuous Testing</a></li>
+<li><a href="#_continuous_testing_in_quarkus">5. Continuous Testing in Quarkus</a></li>
+<li><a href="#_funktionsweise_von_continuous_testing_in_quarkus">6. Funktionsweise von Continuous Testing in Quarkus</a></li>
+<li><a href="#_demo">7. DEMO</a>
+<ul class="sectlevel2">
+<li><a href="#_guide_und_weiterführende_informationen">7.1. Guide und weiterführende Informationen</a></li>
+</ul>
+</li>
+<li><a href="#_fazit">8. Fazit</a></li>
+<li><a href="#_anhang">9. Anhang</a>
+<ul class="sectlevel2">
+<li><a href="#_glossar">9.1. Glossar</a></li>
+<li><a href="#_häufig_gestellte_fragen_faq">9.2. Häufig gestellte Fragen (FAQ)</a></li>
+</ul>
+</li>
+</ul>
+</div>
 </div>
 <div id="content">
-
+<div class="sect1">
+<h2 id="_was_ist_continuous_testing"><a class="anchor" href="#_was_ist_continuous_testing"></a>1. Was ist Continuous Testing?</h2>
+<div class="sectionbody">
+<div class="quoteblock">
+<blockquote>
+<div class="paragraph">
+<p>Unter Continuous Testing versteht man einen Prozess, bei dem automatisiertes Feedback in verschiedenen Phasen des Softwareentwicklungslebenszyklus (Software Development Life Cycle, SDLC) integriert wird, um die Geschwindigkeit und Effizienz bei der Verwaltung von Bereitstellungen zu verbessern.</p>
+</div>
+</blockquote>
+<div class="attribution">
+&#8212; IBM<br>
+<cite>Was sind kontinuierliche Tests?</cite>
+</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/images/continuos-testing.png" alt="Continuous Testing Workflow" width="800" height="450">
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_hauptkomponenten_von_continuous_testing"><a class="anchor" href="#_hauptkomponenten_von_continuous_testing"></a>2. Hauptkomponenten von Continuous Testing</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Automatisierung:</strong> Der Einsatz von Tools zur Automatisierung von Tests ist entscheidend, um schnelle und wiederholbare Testergebnisse zu erzielen. Dies reduziert die manuelle Arbeit und beschleunigt den Testprozess erheblich.</p>
+</li>
+<li>
+<p><strong>Integration in CI/CD-Pipelines:</strong> Tests werden nahtlos in Continuous Integration (CI) und Continuous Delivery (CD) Pipelines eingebunden, um bei jedem Code-Commit eine sofortige Qualitätsbewertung zu ermöglichen. So wird sichergestellt, dass Fehler frühzeitig erkannt und behoben werden können.</p>
+</li>
+<li>
+<p><strong>Stabile Testumgebungen:</strong> Die Bereitstellung konsistenter und produktionsähnlicher Testumgebungen stellt sicher, dass Testergebnisse zuverlässig und aussagekräftig sind. Inkonsistenzen zwischen Test- und Produktionsumgebungen können zu unerwarteten Problemen führen.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_arten_von_tests_im_continuous_testing"><a class="anchor" href="#_arten_von_tests_im_continuous_testing"></a>3. Arten von Tests im Continuous Testing</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Unit-Tests:</strong> Überprüfung einzelner Codeeinheiten (z.B. Methoden, Klassen) auf korrekte Funktionalität, um sicherzustellen, dass jede Einheit isoliert betrachtet funktioniert.</p>
+</li>
+<li>
+<p><strong>Integrationstests:</strong> Testen des Zusammenspiels verschiedener Module oder Services, um zu gewährleisten, dass sie korrekt miteinander kommunizieren und Daten austauschen.</p>
+</li>
+<li>
+<p><strong>End-to-End-Tests (E2E-Tests):</strong> Validierung kompletter Geschäftsprozesse vom Anfang bis zum Ende (z.B. Benutzeranmeldung, Produktsuche, Kaufabschluss), um das Systemverhalten aus Anwendersicht zu prüfen.</p>
+</li>
+<li>
+<p><strong>Leistungstests (Performance Tests):</strong> Bewertung der Performance (z.B. Reaktionszeit, Durchsatz) der Anwendung unter verschiedenen Lastbedingungen, um sicherzustellen, dass sie auch bei hoher Auslastung stabil bleibt.</p>
+</li>
+<li>
+<p><strong>Sicherheitstests:</strong> Identifizierung und Behebung von Sicherheitslücken innerhalb der Anwendung, um sie vor Angriffen und unbefugtem Zugriff zu schützen.</p>
+</li>
+<li>
+<p><strong>UI-Tests (User Interface Tests):</strong> Automatisierte Tests der Benutzeroberfläche, um die korrekte Darstellung und Funktionalität der Anwendung aus Sicht des Endbenutzers zu verifizieren.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_herausforderungen_beim_continuous_testing"><a class="anchor" href="#_herausforderungen_beim_continuous_testing"></a>4. Herausforderungen beim Continuous Testing</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Testdatenmanagement:</strong> Die Bereitstellung und Pflege geeigneter, konsistenter und datenschutzkonformer Testdaten kann komplex und zeitaufwändig sein.</p>
+</li>
+<li>
+<p><strong>Infrastrukturkosten:</strong> Der Aufbau und die Wartung der notwendigen Testinfrastruktur (z.B. Server, Datenbanken, virtuelle Maschinen) erfordern Investitionen und Ressourcen.</p>
+</li>
+<li>
+<p><strong>Testwartung:</strong> Automatisierte Tests müssen regelmäßig aktualisiert werden, um mit Änderungen im Code, der Architektur und den Anforderungen Schritt zu halten. Veraltete Tests können zu falschen Ergebnissen führen.</p>
+</li>
+<li>
+<p><strong>Komplexität der Testumgebung</strong>: Das Aufsetzen einer stabilen Testumgebung, die der Produktivumgebung gleicht, ist eine Herausforderung</p>
+</li>
+<li>
+<p><strong>Zeitaufwand</strong>: Das Ausführen aller Tests kann bei größeren Projekten viel Zeit in Anspruch nehmen</p>
+</li>
+</ul>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 11.1111%;">
+<col style="width: 11.1111%;">
+<col style="width: 22.2222%;">
+<col style="width: 33.3333%;">
+<col style="width: 22.2223%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Tool</th>
+<th class="tableblock halign-left valign-top">Open Source</th>
+<th class="tableblock halign-left valign-top">Lizenz</th>
+<th class="tableblock halign-left valign-top">Verwendung</th>
+<th class="tableblock halign-left valign-top">Programmiersprachen</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Jenkins</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Ja</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MIT</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">CI/CD-Automatisierung, Orchestrierung von Testabläufen, Build-Automatisierung</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Groovy, Java, uvm. (Plugins)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Selenium</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Ja</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Apache License 2.0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Automatisierung von Webbrowsern, UI-Tests, End-to-End-Tests</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Java, Python, C#, JavaScript, Ruby, uvm.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">JUnit</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Ja</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Eclipse Public License - v 2.0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Unit-Tests</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Java</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">TestNG</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Ja</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Apache License 2.0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Unit-Tests, Integrationstests, End-to-End-Tests, bietet mehr Flexibilität als JUnit</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Java</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Cypress</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Ja</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MIT</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">End-to-End-Tests von Webanwendungen</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">JavaScript</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">JMeter</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Ja</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Apache License 2.0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Lasttests, Performancetests, Stresstests</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Java (aber auch andere Protokolle testbar)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SonarQube</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Teilweise</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Community Edition:</strong> LGPLv3&lt;br&gt;<strong>Kommerzielle Editionen:</strong> Proprietär</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Statische Code-Analyse, Erkennung von Sicherheitslücken, Code-Qualitätsprüfung</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Unterstützt über 25 Sprachen, z.B. Java, C#, C++, JavaScript, Python</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Rest-Assured</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Ja</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Apache License 2.0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Testen von REST-Services, API-Tests</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Java, Groovy</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Mockito</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Ja</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MIT</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Mocking-Framework, Erstellung von Mock-Objekten für Unit- und Integrationstests</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Java</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_continuous_testing_in_quarkus"><a class="anchor" href="#_continuous_testing_in_quarkus"></a>5. Continuous Testing in Quarkus</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Quarkus unterstützt Continuous Testing, eine Funktion, die es ermöglicht, Tests unmittelbar nach dem Speichern von Codeänderungen auszuführen. Dies beschleunigt den Entwicklungsprozess erheblich, da Entwickler sofortiges Feedback zu ihren Änderungen erhalten.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_funktionsweise_von_continuous_testing_in_quarkus"><a class="anchor" href="#_funktionsweise_von_continuous_testing_in_quarkus"></a>6. Funktionsweise von Continuous Testing in Quarkus</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Automatische Testausführung:</strong></p>
+</li>
+<li>
+<p><strong>Entwicklungsmodus:</strong> Durch Starten des Quarkus-Entwicklungsmodus mit dem Befehl <code>quarkus dev</code> werden Tests standardmäßig <strong>pausiert</strong>. Die Tests können mit der Taste <code>r</code> gestartet werden und liefern sofortige Rückmeldungen zu den Testergebnissen.</p>
+</li>
+<li>
+<p><strong>Konfigurierbarkeit:</strong></p>
+</li>
+<li>
+<p>Über die <code>application.properties</code>-Datei kann das Verhalten des Continuous Testings angepasst werden.</p>
+</li>
+<li>
+<p>Durch Setzen von <code>quarkus.test.continuous-testing=enabled</code> wird das automatische Testen bei jedem Speichern aktiviert.</p>
+</li>
+<li>
+<p>Mit <code>quarkus.test.continuous-testing=paused</code> wird das automatische Testen deaktiviert und die Tests müssen manuell gestartet werden.</p>
+</li>
+<li>
+<p><code>quarkus.test.mode= थांबेल</code> (seit Quarkus 3.6) ermöglicht es, Tests standardmäßig im gestoppten Modus zu starten.</p>
+</li>
+<li>
+<p><code>quarkus.test.continuous-testing.tag.include</code> und <code>quarkus.test.continuous-testing.tag.exclude</code> erlauben das Ein- und Ausschließen von Tests anhand ihrer JUnit-Tags.</p>
+</li>
+<li>
+<p><strong>Interaktive Steuerung:</strong></p>
+</li>
+<li>
+<p>Während des Entwicklungsmodus stehen verschiedene Befehle zur Verfügung, um das Testverhalten zu steuern:</p>
+</li>
+<li>
+<p><code>r</code>: Erneutes Ausführen aller Tests.</p>
+</li>
+<li>
+<p><code>f</code>: Erneutes Ausführen der fehlgeschlagenen Tests.</p>
+</li>
+<li>
+<p><code>b</code>: Wechselt zwischen dem Ausführen aller oder nur der fehlgeschlagenen Tests.</p>
+</li>
+<li>
+<p><code>v</code>: Anzeigen von Fehlern.</p>
+</li>
+<li>
+<p><code>p</code>: Pausieren der Tests.</p>
+</li>
+<li>
+<p><code>i</code>: Anzeigen zusätzlicher Informationen zur Testausführung.</p>
+</li>
+<li>
+<p><code>h</code>: Hilfe anzeigen.</p>
+</li>
+<li>
+<p><code>q</code>: Beenden des Entwicklungsmodus.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_demo"><a class="anchor" href="#_demo"></a>7. DEMO</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_guide_und_weiterführende_informationen"><a class="anchor" href="#_guide_und_weiterführende_informationen"></a>7.1. Guide und weiterführende Informationen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://quarkus.io/guides/continuous-testing">Quarkus Continuous Testing Guide</a></p>
+</li>
+<li>
+<p><a href="https://quarkus.io/guides/getting-started-testing">Quarkus Testing Guide</a></p>
+</li>
+<li>
+<p><a href="https://www.ibm.com/topics/continuous-testing">Was sind kontinuierliche Tests</a></p>
+</li>
+<li>
+<p><a href="https://www.infoworld.com/article/3699997/how-to-make-the-most-of-continuous-testing.html">How to make the most of continuous testing</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_fazit"><a class="anchor" href="#_fazit"></a>8. Fazit</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Continuous Testing ist ein mächtiger Ansatz, um die Qualität von Software zu verbessern und die Entwicklungszeit zu verkürzen. Durch die Automatisierung von Tests und die Integration in CI/CD-Pipelines wird sichergestellt, dass Fehler frühzeitig erkannt und behoben werden können. Quarkus bietet mit seinem Continuous-Testing-Feature eine hervorragende Unterstützung für diesen Ansatz.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_anhang"><a class="anchor" href="#_anhang"></a>9. Anhang</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_glossar"><a class="anchor" href="#_glossar"></a>9.1. Glossar</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>CI/CD:</strong> Continuous Integration/Continuous Delivery bzw. Continuous Deployment.</p>
+</li>
+<li>
+<p><strong>SDLC:</strong> Software Development Life Cycle (Softwareentwicklungslebenszyklus).</p>
+</li>
+<li>
+<p><strong>Unit-Test:</strong> Test einer einzelnen Codeeinheit (z.B. Methode, Klasse).</p>
+</li>
+<li>
+<p><strong>Integrationstest:</strong> Test des Zusammenspiels mehrerer Komponenten.</p>
+</li>
+<li>
+<p><strong>End-to-End-Test (E2E-Test):</strong> Test eines kompletten Anwendungsfalls aus Sicht des Endbenutzers.</p>
+</li>
+<li>
+<p><strong>Performance Test:</strong> Test zur Überprüfung der Leistungsfähigkeit einer Anwendung.</p>
+</li>
+<li>
+<p><strong>Sicherheitstest:</strong> Test zur Identifizierung von Sicherheitslücken.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_häufig_gestellte_fragen_faq"><a class="anchor" href="#_häufig_gestellte_fragen_faq"></a>9.2. Häufig gestellte Fragen (FAQ)</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Frage:</strong> Was ist der Unterschied zwischen Continuous Testing und traditionellem Testen?</p>
+</li>
+<li>
+<p><strong>Antwort:</strong> Beim traditionellen Testen werden Tests oft in einer separaten Phase nach der Entwicklung durchgeführt. Continuous Testing integriert Tests in jede Phase des Entwicklungszyklus und ermöglicht so ein früheres und häufigeres Feedback.</p>
+</li>
+<li>
+<p><strong>Frage:</strong> Welche Vorteile bietet Continuous Testing?</p>
+</li>
+<li>
+<p><strong>Antwort:</strong>  Schnellere Feedback-Zyklen, frühere Fehlererkennung, verbesserte Codequalität, erhöhte Effizienz, beschleunigte Bereitstellung.</p>
+</li>
+<li>
+<p><strong>Frage:</strong> Ist Continuous Testing für jedes Projekt geeignet?</p>
+</li>
+<li>
+<p><strong>Antwort:</strong> Continuous Testing ist besonders für Projekte mit häufigen Codeänderungen und einem hohen Automatisierungsgrad geeignet. Bei kleineren, weniger komplexen Projekten kann der Aufwand für die Implementierung den Nutzen übersteigen.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2024-12-27 13:32:51 UTC
+Version 1.1<br>
 </div>
 </div>
 </body>
