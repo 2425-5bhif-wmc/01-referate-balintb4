@@ -1,4 +1,4 @@
-package at.htl.leonding.bouandary;
+package at.htl.leonding.boundary;
 
 import io.quarkus.test.junit.QuarkusTest;
 import io.restassured.response.Response;

@@ -1,9 +1,9 @@
-name: Run all unit test
+name: Run all integration test
 
 on:
   push:
     paths:
-      - 'continuous-testing-demo/src/main/java/at/htl/leonding/bouandary/**'
+      - 'continuous-testing-demo/src/main/java/at/htl/leonding/boundary/**'
     branches:
       - main
   pull_request:

@@ -1,8 +1,7 @@
-package at.htl.leonding.bouandary;
+package at.htl.leonding.boundary;
 
 import at.htl.leonding.entity.Person;
 import at.htl.leonding.repository.PersonRepository;
-import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
