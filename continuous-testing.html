@@ -461,12 +461,12 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_arten_von_tests_im_continuous_testing">3. Arten von Tests im Continuous Testing</a></li>
 <li><a href="#_herausforderungen_beim_continuous_testing">4. Herausforderungen beim Continuous Testing</a></li>
 <li><a href="#_continuous_testing_in_quarkus">5. Continuous Testing in Quarkus</a></li>
-<li><a href="#_funktionsweise_von_continuous_testing_in_quarkus">6. Funktionsweise von Continuous Testing in Quarkus</a></li>
-<li><a href="#_demo">7. DEMO</a>
+<li><a href="#_funktionsweise_von_continuous_testing_in_quarkus">6. Funktionsweise von Continuous Testing in Quarkus</a>
 <ul class="sectlevel2">
-<li><a href="#_guide_und_weiterführende_informationen">7.1. Guide und weiterführende Informationen</a></li>
+<li><a href="#_guide_und_weiterführende_informationen">6.1. Guide und weiterführende Informationen</a></li>
 </ul>
 </li>
+<li><a href="#_demo">7. DEMO</a></li>
 <li><a href="#_fazit">8. Fazit</a></li>
 <li><a href="#_anhang">9. Anhang</a>
 <ul class="sectlevel2">
@@ -683,12 +683,6 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <p>Mit <code>quarkus.test.continuous-testing=paused</code> wird das automatische Testen deaktiviert und die Tests müssen manuell gestartet werden.</p>
 </li>
 <li>
-<p><code>quarkus.test.mode= थांबेल</code> (seit Quarkus 3.6) ermöglicht es, Tests standardmäßig im gestoppten Modus zu starten.</p>
-</li>
-<li>
-<p><code>quarkus.test.continuous-testing.tag.include</code> und <code>quarkus.test.continuous-testing.tag.exclude</code> erlauben das Ein- und Ausschließen von Tests anhand ihrer JUnit-Tags.</p>
-</li>
-<li>
 <p><strong>Interaktive Steuerung:</strong></p>
 </li>
 <li>
@@ -720,13 +714,8 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </li>
 </ul>
 </div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_demo"><a class="anchor" href="#_demo"></a>7. DEMO</h2>
-<div class="sectionbody">
 <div class="sect2">
-<h3 id="_guide_und_weiterführende_informationen"><a class="anchor" href="#_guide_und_weiterführende_informationen"></a>7.1. Guide und weiterführende Informationen</h3>
+<h3 id="_guide_und_weiterführende_informationen"><a class="anchor" href="#_guide_und_weiterführende_informationen"></a>6.1. Guide und weiterführende Informationen</h3>
 <div class="ulist">
 <ul>
 <li>
@@ -738,11 +727,37 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li>
 <p><a href="https://www.ibm.com/topics/continuous-testing">Was sind kontinuierliche Tests</a></p>
 </li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_demo"><a class="anchor" href="#_demo"></a>7. DEMO</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Im  dem <a href="https://github.com/2425-5bhif-wmc/01-referate-balintb4">Repository</a> sind neben der Dokumentation auch noch 2 Demoprojekte aufzufinden:</p>
+</div>
+<div class="paragraph">
+<p>Beide Projekte sind mit der GithubCLI
+automatisert um Test zu ausführen</p>
+</div>
+<div class="ulist">
+<ul>
 <li>
-<p><a href="https://www.infoworld.com/article/3699997/how-to-make-the-most-of-continuous-testing.html">How to make the most of continuous testing</a></p>
+<p><strong>continuous-testing-demo</strong>: Implementierung der REST Endpunkte ist durch "klassische" blockierende Datenbankzugriffe umgesetzt.</p>
+</li>
+<li>
+<p><strong>devservices-demo</strong>: Implementierung der REST Endpunkte mit reaktiven asynchronen Datenbankzugriffen.</p>
 </li>
 </ul>
 </div>
+<div class="paragraph">
+<p>Beide Projekte implementieren einen kleinen REST-Service, mit einem <code>User</code> Endpunkt, welcher <code>create</code> und <code>read</code> Operationen zur Verfügung stellt.
+Die erstellten Nutzer werden in der Datenbank gespeichert. Bei <code>read</code> Operationen wird das um einige "sensible" Daten reduzierte <code>UserDto</code> zurückgeliefert.</p>
+</div>
+<div class="paragraph">
+<p>Weiters gibt es noch das <strong>stress</strong> Projekt, welches ein kleines Tool zum Testen der Performance der beiden Applikationen verwendet wird.</p>
 </div>
 </div>
 </div>
