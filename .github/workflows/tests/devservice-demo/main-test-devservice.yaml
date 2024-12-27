@@ -3,7 +3,7 @@ name: Test devservices-demo
 on:
   push:
     paths:
-      - 'devservices-demo/**'
+      - '../../../../devservices-demo'
     branches:
       - main
   pull_request:
