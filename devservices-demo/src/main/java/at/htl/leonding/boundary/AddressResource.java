@@ -16,6 +16,7 @@ public class AddressResource {
     @Inject
     AddressRepository addressRepository;
 
+
     @GET
     @Path("/all")
     public List<Address> getAllAddresses() {

@@ -113,8 +113,6 @@ Quarkus unterstützt Continuous Testing, eine Funktion, die es ermöglicht, Test
 *   Über die `application.properties`-Datei kann das Verhalten des Continuous Testings angepasst werden.
 *   Durch Setzen von `quarkus.test.continuous-testing=enabled` wird das automatische Testen bei jedem Speichern aktiviert.
 *   Mit `quarkus.test.continuous-testing=paused` wird das automatische Testen deaktiviert und die Tests müssen manuell gestartet werden.
-*   `quarkus.test.mode= थांबेल` (seit Quarkus 3.6) ermöglicht es, Tests standardmäßig im gestoppten Modus zu starten.
-*   `quarkus.test.continuous-testing.tag.include` und `quarkus.test.continuous-testing.tag.exclude` erlauben das Ein- und Ausschließen von Tests anhand ihrer JUnit-Tags.
 *   **Interaktive Steuerung:**
 *   Während des Entwicklungsmodus stehen verschiedene Befehle zur Verfügung, um das Testverhalten zu steuern:
 *   `r`: Erneutes Ausführen aller Tests.
@@ -126,17 +124,37 @@ Quarkus unterstützt Continuous Testing, eine Funktion, die es ermöglicht, Test
 *   `h`: Hilfe anzeigen.
 *   `q`: Beenden des Entwicklungsmodus.
 
-== DEMO
+
 
 === Guide und weiterführende Informationen
 
 *   https://quarkus.io/guides/continuous-testing[Quarkus Continuous Testing Guide]
 *   https://quarkus.io/guides/getting-started-testing[Quarkus Testing Guide]
 *   https://www.ibm.com/topics/continuous-testing[Was sind kontinuierliche Tests]
-*   https://www.infoworld.com/article/3699997/how-to-make-the-most-of-continuous-testing.html[How to make the most of continuous testing]
+
+== DEMO
+
+Im  dem https://github.com/2425-5bhif-wmc/01-referate-balintb4[Repository] sind neben der Dokumentation auch noch 2 Demoprojekte aufzufinden:
+
+
+Beide Projekte sind mit der GithubCLI
+automatisert um Test zu ausführen
+
+* *continuous-testing-demo*: Implementierung der REST Endpunkte ist durch "klassische" blockierende Datenbankzugriffe umgesetzt.
+
+* *devservices-demo*: Implementierung der REST Endpunkte mit reaktiven asynchronen Datenbankzugriffen.
+
+
+
+Beide Projekte implementieren einen kleinen REST-Service, mit einem `User` Endpunkt, welcher `create` und `read` Operationen zur Verfügung stellt.
+Die erstellten Nutzer werden in der Datenbank gespeichert. Bei `read` Operationen wird das um einige "sensible" Daten reduzierte `UserDto` zurückgeliefert.
+
+Weiters gibt es noch das *stress* Projekt, welches ein kleines Tool zum Testen der Performance der beiden Applikationen verwendet wird.
 
 == Fazit
 Continuous Testing ist ein mächtiger Ansatz, um die Qualität von Software zu verbessern und die Entwicklungszeit zu verkürzen. Durch die Automatisierung von Tests und die Integration in CI/CD-Pipelines wird sichergestellt, dass Fehler frühzeitig erkannt und behoben werden können. Quarkus bietet mit seinem Continuous-Testing-Feature eine hervorragende Unterstützung für diesen Ansatz.
+
+
 
 == Anhang
 
