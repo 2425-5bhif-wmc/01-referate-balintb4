@@ -1,1 +1,162 @@
+= Continuous Testing
+:author: Balint Balazs
+:revnumber: 1.1
+:revdate: 2024-01-11
+:doctype: book
+:reproducible:
+:icons: font
 :sectnums:
+:toc:
+:source-highlighter: rouge
+:docinfo: shared
+
+== Was ist Continuous Testing?
+
+[quote, IBM, "Was sind kontinuierliche Tests?"]
+____
+Unter Continuous Testing versteht man einen Prozess, bei dem automatisiertes Feedback in verschiedenen Phasen des Softwareentwicklungslebenszyklus (Software Development Life Cycle, SDLC) integriert wird, um die Geschwindigkeit und Effizienz bei der Verwaltung von Bereitstellungen zu verbessern.
+____
+
+image::images/continuos-testing.png[Continuous Testing Workflow, 800, 450]
+
+== Hauptkomponenten von Continuous Testing
+
+*   **Automatisierung:** Der Einsatz von Tools zur Automatisierung von Tests ist entscheidend, um schnelle und wiederholbare Testergebnisse zu erzielen. Dies reduziert die manuelle Arbeit und beschleunigt den Testprozess erheblich.
+*   **Integration in CI/CD-Pipelines:** Tests werden nahtlos in Continuous Integration (CI) und Continuous Delivery (CD) Pipelines eingebunden, um bei jedem Code-Commit eine sofortige Qualitätsbewertung zu ermöglichen. So wird sichergestellt, dass Fehler frühzeitig erkannt und behoben werden können.
+*   **Stabile Testumgebungen:** Die Bereitstellung konsistenter und produktionsähnlicher Testumgebungen stellt sicher, dass Testergebnisse zuverlässig und aussagekräftig sind. Inkonsistenzen zwischen Test- und Produktionsumgebungen können zu unerwarteten Problemen führen.
+
+== Arten von Tests im Continuous Testing
+
+*   **Unit-Tests:** Überprüfung einzelner Codeeinheiten (z.B. Methoden, Klassen) auf korrekte Funktionalität, um sicherzustellen, dass jede Einheit isoliert betrachtet funktioniert.
+*   **Integrationstests:** Testen des Zusammenspiels verschiedener Module oder Services, um zu gewährleisten, dass sie korrekt miteinander kommunizieren und Daten austauschen.
+*   **End-to-End-Tests (E2E-Tests):** Validierung kompletter Geschäftsprozesse vom Anfang bis zum Ende (z.B. Benutzeranmeldung, Produktsuche, Kaufabschluss), um das Systemverhalten aus Anwendersicht zu prüfen.
+*   **Leistungstests (Performance Tests):** Bewertung der Performance (z.B. Reaktionszeit, Durchsatz) der Anwendung unter verschiedenen Lastbedingungen, um sicherzustellen, dass sie auch bei hoher Auslastung stabil bleibt.
+*   **Sicherheitstests:** Identifizierung und Behebung von Sicherheitslücken innerhalb der Anwendung, um sie vor Angriffen und unbefugtem Zugriff zu schützen.
+*   **UI-Tests (User Interface Tests):** Automatisierte Tests der Benutzeroberfläche, um die korrekte Darstellung und Funktionalität der Anwendung aus Sicht des Endbenutzers zu verifizieren.
+
+== Herausforderungen beim Continuous Testing
+
+*   **Testdatenmanagement:** Die Bereitstellung und Pflege geeigneter, konsistenter und datenschutzkonformer Testdaten kann komplex und zeitaufwändig sein.
+*   **Infrastrukturkosten:** Der Aufbau und die Wartung der notwendigen Testinfrastruktur (z.B. Server, Datenbanken, virtuelle Maschinen) erfordern Investitionen und Ressourcen.
+*   **Testwartung:** Automatisierte Tests müssen regelmäßig aktualisiert werden, um mit Änderungen im Code, der Architektur und den Anforderungen Schritt zu halten. Veraltete Tests können zu falschen Ergebnissen führen.
+*   **Komplexität der Testumgebung**: Das Aufsetzen einer stabilen Testumgebung, die der Produktivumgebung gleicht, ist eine Herausforderung
+*   **Zeitaufwand**: Das Ausführen aller Tests kann bei größeren Projekten viel Zeit in Anspruch nehmen
+
+[cols="1,1,2,3,2"]
+|===
+| Tool | Open Source | Lizenz | Verwendung | Programmiersprachen
+
+| Jenkins
+| Ja
+| MIT
+| CI/CD-Automatisierung, Orchestrierung von Testabläufen, Build-Automatisierung
+| Groovy, Java, uvm. (Plugins)
+
+| Selenium
+| Ja
+| Apache License 2.0
+| Automatisierung von Webbrowsern, UI-Tests, End-to-End-Tests
+| Java, Python, C#, JavaScript, Ruby, uvm.
+
+| JUnit
+| Ja
+| Eclipse Public License - v 2.0
+| Unit-Tests
+| Java
+
+| TestNG
+| Ja
+| Apache License 2.0
+| Unit-Tests, Integrationstests, End-to-End-Tests, bietet mehr Flexibilität als JUnit
+| Java
+
+| Cypress
+| Ja
+| MIT
+| End-to-End-Tests von Webanwendungen
+| JavaScript
+
+| JMeter
+| Ja
+| Apache License 2.0
+| Lasttests, Performancetests, Stresstests
+| Java (aber auch andere Protokolle testbar)
+
+| SonarQube
+| Teilweise
+| **Community Edition:** LGPLv3<br>**Kommerzielle Editionen:** Proprietär
+| Statische Code-Analyse, Erkennung von Sicherheitslücken, Code-Qualitätsprüfung
+| Unterstützt über 25 Sprachen, z.B. Java, C#, C++, JavaScript, Python
+
+| Rest-Assured
+| Ja
+| Apache License 2.0
+| Testen von REST-Services, API-Tests
+| Java, Groovy
+
+| Mockito
+| Ja
+| MIT
+| Mocking-Framework, Erstellung von Mock-Objekten für Unit- und Integrationstests
+| Java
+|===
+
+== Continuous Testing in Quarkus
+
+Quarkus unterstützt Continuous Testing, eine Funktion, die es ermöglicht, Tests unmittelbar nach dem Speichern von Codeänderungen auszuführen. Dies beschleunigt den Entwicklungsprozess erheblich, da Entwickler sofortiges Feedback zu ihren Änderungen erhalten.
+
+== Funktionsweise von Continuous Testing in Quarkus
+
+*   **Automatische Testausführung:**
+*   **Entwicklungsmodus:** Durch Starten des Quarkus-Entwicklungsmodus mit dem Befehl `quarkus dev` werden Tests standardmäßig *pausiert*. Die Tests können mit der Taste `r` gestartet werden und liefern sofortige Rückmeldungen zu den Testergebnissen.
+*   **Konfigurierbarkeit:**
+*   Über die `application.properties`-Datei kann das Verhalten des Continuous Testings angepasst werden.
+*   Durch Setzen von `quarkus.test.continuous-testing=enabled` wird das automatische Testen bei jedem Speichern aktiviert.
+*   Mit `quarkus.test.continuous-testing=paused` wird das automatische Testen deaktiviert und die Tests müssen manuell gestartet werden.
+*   `quarkus.test.mode= थांबेल` (seit Quarkus 3.6) ermöglicht es, Tests standardmäßig im gestoppten Modus zu starten.
+*   `quarkus.test.continuous-testing.tag.include` und `quarkus.test.continuous-testing.tag.exclude` erlauben das Ein- und Ausschließen von Tests anhand ihrer JUnit-Tags.
+*   **Interaktive Steuerung:**
+*   Während des Entwicklungsmodus stehen verschiedene Befehle zur Verfügung, um das Testverhalten zu steuern:
+*   `r`: Erneutes Ausführen aller Tests.
+*   `f`: Erneutes Ausführen der fehlgeschlagenen Tests.
+*   `b`: Wechselt zwischen dem Ausführen aller oder nur der fehlgeschlagenen Tests.
+*   `v`: Anzeigen von Fehlern.
+*   `p`: Pausieren der Tests.
+*   `i`: Anzeigen zusätzlicher Informationen zur Testausführung.
+*   `h`: Hilfe anzeigen.
+*   `q`: Beenden des Entwicklungsmodus.
+
+== DEMO
+
+=== Guide und weiterführende Informationen
+
+*   https://quarkus.io/guides/continuous-testing[Quarkus Continuous Testing Guide]
+*   https://quarkus.io/guides/getting-started-testing[Quarkus Testing Guide]
+*   https://www.ibm.com/topics/continuous-testing[Was sind kontinuierliche Tests]
+*   https://www.infoworld.com/article/3699997/how-to-make-the-most-of-continuous-testing.html[How to make the most of continuous testing]
+
+== Fazit
+Continuous Testing ist ein mächtiger Ansatz, um die Qualität von Software zu verbessern und die Entwicklungszeit zu verkürzen. Durch die Automatisierung von Tests und die Integration in CI/CD-Pipelines wird sichergestellt, dass Fehler frühzeitig erkannt und behoben werden können. Quarkus bietet mit seinem Continuous-Testing-Feature eine hervorragende Unterstützung für diesen Ansatz.
+
+== Anhang
+
+=== Glossar
+
+*   **CI/CD:** Continuous Integration/Continuous Delivery bzw. Continuous Deployment.
+*   **SDLC:** Software Development Life Cycle (Softwareentwicklungslebenszyklus).
+*   **Unit-Test:** Test einer einzelnen Codeeinheit (z.B. Methode, Klasse).
+*   **Integrationstest:** Test des Zusammenspiels mehrerer Komponenten.
+*   **End-to-End-Test (E2E-Test):** Test eines kompletten Anwendungsfalls aus Sicht des Endbenutzers.
+*   **Performance Test:** Test zur Überprüfung der Leistungsfähigkeit einer Anwendung.
+*   **Sicherheitstest:** Test zur Identifizierung von Sicherheitslücken.
+
+=== Häufig gestellte Fragen (FAQ)
+
+*   **Frage:** Was ist der Unterschied zwischen Continuous Testing und traditionellem Testen?
+*   **Antwort:** Beim traditionellen Testen werden Tests oft in einer separaten Phase nach der Entwicklung durchgeführt. Continuous Testing integriert Tests in jede Phase des Entwicklungszyklus und ermöglicht so ein früheres und häufigeres Feedback.
+
+*   **Frage:** Welche Vorteile bietet Continuous Testing?
+*   **Antwort:**  Schnellere Feedback-Zyklen, frühere Fehlererkennung, verbesserte Codequalität, erhöhte Effizienz, beschleunigte Bereitstellung.
+
+*   **Frage:** Ist Continuous Testing für jedes Projekt geeignet?
+*   **Antwort:** Continuous Testing ist besonders für Projekte mit häufigen Codeänderungen und einem hohen Automatisierungsgrad geeignet. Bei kleineren, weniger komplexen Projekten kann der Aufwand für die Implementierung den Nutzen übersteigen.

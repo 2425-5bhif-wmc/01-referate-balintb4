@@ -1,0 +1,49 @@
+name: Run all unit test
+
+on:
+  push:
+    paths:
+      - 'continuous-testing-demo/src/main/java/at/htl/leonding/bouandary/**'
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build-backend:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: KengoTODA/actions-setup-docker-compose@v1
+        with:
+          version: '2.14.2'
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+          cache: 'maven'
+          cache-dependency-path: 'continuous-testing-demo/pom.xml'
+
+
+      - name: Start PostgreSQL Database
+        run: docker compose -f docker-compose-db.yml up -d
+
+      - name: Wait for database to be ready
+        run: |
+          until docker compose -f docker-compose-db.yml exec db pg_isready; do
+            echo "Waiting for database to be ready..."
+            sleep 1
+          done
+
+      - name: Set execute permission for the test script
+        run: chmod +x .github/cicd/run-integration-test.sh
+
+      - name: Execute test script
+        env: # Setze Umgebungsvariablen für die Verbindung zur DB
+          SPRING_DATASOURCE_URL: jdbc:postgresql://localhost:5432/db
+          SPRING_DATASOURCE_USERNAME: app
+          SPRING_DATASOURCE_PASSWORD: app
+        run: ./.github/cicd/run-integration-test.sh
