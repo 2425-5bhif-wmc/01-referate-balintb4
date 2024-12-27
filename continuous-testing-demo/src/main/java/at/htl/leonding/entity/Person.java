@@ -20,6 +20,8 @@ public class Person {
     @JoinColumn(name = "address_id")
     private Address address;
 
+
+
     public Person() {
     }
 

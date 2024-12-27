@@ -3,7 +3,7 @@ name: Run all test  in continuous-testing-demo project
 on:
   push:
     paths:
-      - '../../../../continuous-testing-demo/**'
+      - 'continuous-testing-demo/**'
     branches:
       - main
   pull_request:

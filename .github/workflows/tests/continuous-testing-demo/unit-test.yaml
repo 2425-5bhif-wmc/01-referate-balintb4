@@ -3,7 +3,7 @@ name: RUN all unit-test in continuous-testing-demo project
 on:
   push:
     paths:
-      - '../../../../continuous-testing-demo/src/main/java/at/htl/leonding/entity/**'
+      - 'continuous-testing-demo/src/main/java/at/htl/leonding/entity/**'
     branches:
       - main
   pull_request:

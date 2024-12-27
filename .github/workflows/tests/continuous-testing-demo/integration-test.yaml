@@ -3,7 +3,7 @@ name: Run all integration-test in continuous-testing-demo project
 on:
   push:
     paths:
-      - '../../../../continuous-testing-demo/src/main/java/at/htl/leonding/boundary/**'
+      - 'continuous-testing-demo/src/main/java/at/htl/leonding/boundary/**'
     branches:
       - main
   pull_request:

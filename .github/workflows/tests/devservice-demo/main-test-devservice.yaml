@@ -3,7 +3,7 @@ name: Run all test in  devservices-demo project
 on:
   push:
     paths:
-      - '../../../../devservices-demo/**'
+      - 'devservices-demo/**'
     branches:
       - main
   pull_request:
