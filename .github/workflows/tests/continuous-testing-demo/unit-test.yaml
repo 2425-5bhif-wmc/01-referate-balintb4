@@ -1,9 +1,9 @@
-name: Run all integration test
+name: RUN all unit-test in continuous-testing-demo project
 
 on:
   push:
     paths:
-      - '../../../../continuous-testing-demo/src/main/java/at/htl/leonding/boundary'
+      - '../../../../continuous-testing-demo/src/main/java/at/htl/leonding/entity/**'
     branches:
       - main
   pull_request:
@@ -39,11 +39,11 @@ jobs:
           done
 
       - name: Set execute permission for the test script
-        run: chmod +x .github/cicd/run-integration-test.sh
+        run: chmod +x .github/cicd/continous-testing-demo-scripts/run-unit-test.sh
 
       - name: Execute test script
         env: # Setze Umgebungsvariablen für die Verbindung zur DB
           SPRING_DATASOURCE_URL: jdbc:postgresql://localhost:5432/db
           SPRING_DATASOURCE_USERNAME: app
           SPRING_DATASOURCE_PASSWORD: app
-        run: ./.github/cicd/run-integration-test.sh
+        run: .github/cicd/continous-testing-demo-scripts/run-unit-test.sh
