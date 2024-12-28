@@ -25,6 +25,10 @@ image::images/continuos-testing.png[Continuous Testing Workflow, 800, 450]
 *   **Integration in CI/CD-Pipelines:** Tests werden nahtlos in Continuous Integration (CI) und Continuous Delivery (CD) Pipelines eingebunden, um bei jedem Code-Commit eine sofortige Qualitätsbewertung zu ermöglichen. So wird sichergestellt, dass Fehler frühzeitig erkannt und behoben werden können.
 *   **Stabile Testumgebungen:** Die Bereitstellung konsistenter und produktionsähnlicher Testumgebungen stellt sicher, dass Testergebnisse zuverlässig und aussagekräftig sind. Inkonsistenzen zwischen Test- und Produktionsumgebungen können zu unerwarteten Problemen führen.
 
+== Continuous Testing vs Automated Testing
+
+image::images/continuous-testing-vs-automated-testing.png[Continuous Testing vs Automated Testing,800,450]
+
 == Arten von Tests im Continuous Testing
 
 *   **Unit-Tests:** Überprüfung einzelner Codeeinheiten (z.B. Methoden, Klassen) auf korrekte Funktionalität, um sicherzustellen, dass jede Einheit isoliert betrachtet funktioniert.
@@ -132,24 +136,107 @@ Quarkus unterstützt Continuous Testing, eine Funktion, die es ermöglicht, Test
 *   https://quarkus.io/guides/getting-started-testing[Quarkus Testing Guide]
 *   https://www.ibm.com/topics/continuous-testing[Was sind kontinuierliche Tests]
 
-== DEMO
+== Demo
 
-Im  dem https://github.com/2425-5bhif-wmc/01-referate-balintb4[Repository] sind neben der Dokumentation auch noch 2 Demoprojekte aufzufinden:
+Im Repository link:https://github.com/2425-5bhif-wmc/01-referate-balintb4[01-referate-balintb4] finden Sie neben dieser Dokumentation zwei Demo-Projekte.
 
+Beide Projekte nutzen GitHub Actions, um Tests automatisiert auszuführen. Es handelt sich um zwei identische Projekte, wobei eines *DevServices* und das andere eine *manuell konfigurierte PostgreSQL-Datenbank* verwendet.
 
-Beide Projekte sind mit der GithubCLI
-automatisert um Test zu ausführen
+*   **`continuous-testing-demo`**: Beinhaltet eine klassische PostgreSQL-Konfiguration.
+*   **`devservices-demo`**: Nutzt Quarkus Dev Services zu Testzwecken.
 
-* *continuous-testing-demo*: Implementierung der REST Endpunkte ist durch "klassische" blockierende Datenbankzugriffe umgesetzt.
+=== Hauptunterschiede in der GitHub Actions Konfiguration
 
-* *devservices-demo*: Implementierung der REST Endpunkte mit reaktiven asynchronen Datenbankzugriffen.
+Der Hauptunterschied zwischen den beiden Projekten liegt in der Art und Weise, wie die PostgreSQL-Datenbank für die Tests bereitgestellt wird. Das Projekt `continuous-testing-demo` erfordert manuelle Schritte, die im Folgenden in der Workflow-Datei dargestellt sind:
 
+[source,yaml]
+----
+name: Run all test  in continuous-testing-demo project
 
+on:
+  push:
+    paths:
+      - 'continuous-testing-demo/**'
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
 
-Beide Projekte implementieren einen kleinen REST-Service, mit einem `User` Endpunkt, welcher `create` und `read` Operationen zur Verfügung stellt.
-Die erstellten Nutzer werden in der Datenbank gespeichert. Bei `read` Operationen wird das um einige "sensible" Daten reduzierte `UserDto` zurückgeliefert.
+jobs:
+  build-backend:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: KengoTODA/actions-setup-docker-compose@v1 <1>
+        with:
+          version: '2.14.2'
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+          cache: 'maven'
+          cache-dependency-path: 'continuous-testing-demo/pom.xml'
 
-Weiters gibt es noch das *stress* Projekt, welches ein kleines Tool zum Testen der Performance der beiden Applikationen verwendet wird.
+      - name: Start PostgreSQL Database <2>
+        run: docker compose -f docker-compose-db.yml up -d
+
+      - name: Wait for database to be ready <3>
+        run: |
+          until docker compose -f docker-compose-db.yml exec db pg_isready; do
+            echo "Waiting for database to be ready..."
+            sleep 1
+          done
+
+      - name: Set execute permission for the test script
+        run: chmod +x .github/cicd/continous-testing-demo-scripts/run-test.sh
+
+      - name: Execute test script <4>
+        env: # Setze Umgebungsvariablen für die Verbindung zur DB
+          SPRING_DATASOURCE_URL: jdbc:postgresql://localhost:5432/db
+          SPRING_DATASOURCE_USERNAME: app
+          SPRING_DATASOURCE_PASSWORD: app
+        run: .github/cicd/continous-testing-demo-scripts/run-test.sh
+----
+
+<1> Auf dem GitHub Actions Runner muss das `docker-compose`-Plugin manuell installiert werden.
+<2> Das PostgreSQL-Image muss manuell mit `docker compose` gestartet werden.
+<3> Es muss gewartet werden, bis die Datenbank vollständig initialisiert und einsatzbereit ist.
+<4> Die Umgebungsvariablen für die Datenbankverbindung müssen explizit gesetzt werden.
+
+[IMPORTANT]
+.Wichtige Information zur `docker-compose-db.yml`
+====
+Die `docker-compose-db.yml`-Datei muss selbst bereitgestellt werden.
+====
+
+Im Folgenden sehen Sie  den Inhalt der `docker-compose-db.yml`-Datei, die in diesem Projekt verwendet wird:
+
+.docker-compose-db.yml
+[source,yaml,collapsible]
+----
+version: '3.8'
+services:
+  db:
+    image: postgres:17.0-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: app
+      POSTGRES_PASSWORD: app
+      POSTGRES_DB: db
+    ports:
+      - 5432:5432
+    networks:
+      - postgres
+
+networks:
+  postgres:
+    driver: bridge
+----
+
+Im Gegensatz dazu verwendet das Projekt `devservices-demo` die Quarkus Dev Services. Dies vereinfacht die Konfiguration erheblich, da Quarkus die Datenbank automatisch startet und verwaltet. Sie müssen sich nicht um die manuelle Installation von `docker-compose`, das Starten der Datenbank oder das Setzen der Umgebungsvariablen kümmern.
 
 == Fazit
 Continuous Testing ist ein mächtiger Ansatz, um die Qualität von Software zu verbessern und die Entwicklungszeit zu verkürzen. Durch die Automatisierung von Tests und die Integration in CI/CD-Pipelines wird sichergestellt, dass Fehler frühzeitig erkannt und behoben werden können. Quarkus bietet mit seinem Continuous-Testing-Feature eine hervorragende Unterstützung für diesen Ansatz.

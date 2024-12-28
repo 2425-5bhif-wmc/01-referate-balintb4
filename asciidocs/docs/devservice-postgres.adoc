@@ -175,7 +175,7 @@ public class PersonResource {
 
 Dieser Endpunkt liefert alle Person-Entitäten als JSON zurück.
 ====
-== 6. Optional: Datenbank mit DatabaseSeed initialisieren
+== Optional: Datenbank mit DatabaseSeed initialisieren
 
 Um einige Daten beim Start der Anwendung zu erstellen,
 kannst du eine DatabaseSeed-Klasse hinzufügen,
@@ -215,7 +215,7 @@ public class DatabaseSeed {
 Diese Klasse fügt beim Start der Anwendung einige
 Person-Entitäten hinzu, wenn noch keine vorhanden sind.
 ====
-== 7. Anwendung starten
+==  Anwendung starten
  mvn quarkus:dev
 
 .Result

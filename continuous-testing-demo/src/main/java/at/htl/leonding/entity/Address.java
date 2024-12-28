@@ -14,8 +14,6 @@ public class Address {
     private String zipCode;
 
 
-
-
     public Address() {
     }
 
@@ -25,7 +23,6 @@ public class Address {
         this.zipCode = zipCode;
 
     }
-
 
 
     public double calculateShippingCost() {
@@ -40,9 +37,7 @@ public class Address {
     }
 
     public boolean isValid() {
-        return street != null && !street.isEmpty() &&
-                city != null && !city.isEmpty() &&
-                zipCode != null && !zipCode.isEmpty();
+        return street != null && !street.isEmpty() && city != null && !city.isEmpty() && zipCode != null && !zipCode.isEmpty();
     }
 
     public Long getId() {
@@ -90,11 +85,6 @@ public class Address {
 
     @Override
     public String toString() {
-        return "Address{" +
-                "id=" + id +
-                ", street='" + street + '\'' +
-                ", city='" + city + '\'' +
-                ", zipCode='" + zipCode + '\'' +
-                '}';
+        return "Address{" + "id=" + id + ", street='" + street + '\'' + ", city='" + city + '\'' + ", zipCode='" + zipCode + '\'' + '}';
     }
 }

@@ -6,6 +6,7 @@ import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+
 import java.util.List;
 
 @Path("/person")
@@ -31,10 +32,6 @@ public class PersonResource {
         }
 
         return Response.ok(person).build();
-
-
-
-
     }
 
     @POST
