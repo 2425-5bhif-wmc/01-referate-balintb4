@@ -46,64 +46,96 @@ image::images/continuous-testing-vs-automated-testing.png[Continuous Testing vs 
 *   **Komplexität der Testumgebung**: Das Aufsetzen einer stabilen Testumgebung, die der Produktivumgebung gleicht, ist eine Herausforderung
 *   **Zeitaufwand**: Das Ausführen aller Tests kann bei größeren Projekten viel Zeit in Anspruch nehmen
 
-[cols="1,1,2,3,2"]
+== Überblick: Testframeworks und ihre Einsatzbereiche
+
+[cols="1,1,1,2,1"]
 |===
-| Tool | Open Source | Lizenz | Verwendung | Programmiersprachen
+| Tool | Open Source | Lizenz | Einsatzbereiche | Sprachen
 
 | Jenkins
 | Ja
 | MIT
-| CI/CD-Automatisierung, Orchestrierung von Testabläufen, Build-Automatisierung
-| Groovy, Java, uvm. (Plugins)
+| CI/CD, Build-Automatisierung
+| Groovy, Java
 
 | Selenium
 | Ja
-| Apache License 2.0
-| Automatisierung von Webbrowsern, UI-Tests, End-to-End-Tests
-| Java, Python, C#, JavaScript, Ruby, uvm.
+| Apache 2.0
+| UI-Tests, Web-Automatisierung
+| Java, Python, C#, JavaScript, Ruby
 
 | JUnit
 | Ja
-| Eclipse Public License - v 2.0
+| Eclipse Public v2.0
 | Unit-Tests
 | Java
 
 | TestNG
 | Ja
-| Apache License 2.0
-| Unit-Tests, Integrationstests, End-to-End-Tests, bietet mehr Flexibilität als JUnit
+| Apache 2.0
+| Unit-, Integrationstests, End-to-End-Tests
 | Java
 
 | Cypress
 | Ja
 | MIT
-| End-to-End-Tests von Webanwendungen
+| End-to-End-Webtests
 | JavaScript
 
 | JMeter
 | Ja
-| Apache License 2.0
-| Lasttests, Performancetests, Stresstests
-| Java (aber auch andere Protokolle testbar)
+| Apache 2.0
+| Last-, Performance-, Stresstests
+| Java
 
 | SonarQube
 | Teilweise
-| **Community Edition:** LGPLv3<br>**Kommerzielle Editionen:** Proprietär
-| Statische Code-Analyse, Erkennung von Sicherheitslücken, Code-Qualitätsprüfung
-| Unterstützt über 25 Sprachen, z.B. Java, C#, C++, JavaScript, Python
+| LGPLv3/Proprietär
+| Code-Analyse, Sicherheitsprüfung
+| 25+ Sprachen (Java, C#, Python, etc.)
 
 | Rest-Assured
 | Ja
-| Apache License 2.0
-| Testen von REST-Services, API-Tests
-| Java, Groovy
+| Apache 2.0
+| API-Tests (REST-Services)
+| Java
 
 | Mockito
 | Ja
 | MIT
-| Mocking-Framework, Erstellung von Mock-Objekten für Unit- und Integrationstests
+| Mocking für Unit- und Integrationstests
 | Java
 |===
+
+== Kriterienkatalog: Vergleich von CI/CD-Tools
+
+[cols="1,1,1,1"]
+|===
+| Tool | Preisgestaltung | Programmiersprachen | Containerisierung
+
+| Azure Pipelines
+| Kostenlos / Kostenpflichtig
+| .NET, Java, Python, Node.js
+| Ja
+
+| CircleCI
+| Kostenlos / Kostenpflichtig
+| Ruby, Python, Java
+| Ja
+
+| GitHub Actions
+| Kostenlos / Kostenpflichtig
+| Alle Docker-kompatiblen Sprachen
+| Ja
+
+| Jenkins
+| Kostenlos, Open Source
+| Alle Sprachen
+| Ja
+|===
+
+
+
 
 == Continuous Testing in Quarkus
 
@@ -111,22 +143,30 @@ Quarkus unterstützt Continuous Testing, eine Funktion, die es ermöglicht, Test
 
 == Funktionsweise von Continuous Testing in Quarkus
 
-*   **Automatische Testausführung:**
-*   **Entwicklungsmodus:** Durch Starten des Quarkus-Entwicklungsmodus mit dem Befehl `quarkus dev` werden Tests standardmäßig *pausiert*. Die Tests können mit der Taste `r` gestartet werden und liefern sofortige Rückmeldungen zu den Testergebnissen.
-*   **Konfigurierbarkeit:**
-*   Über die `application.properties`-Datei kann das Verhalten des Continuous Testings angepasst werden.
-*   Durch Setzen von `quarkus.test.continuous-testing=enabled` wird das automatische Testen bei jedem Speichern aktiviert.
-*   Mit `quarkus.test.continuous-testing=paused` wird das automatische Testen deaktiviert und die Tests müssen manuell gestartet werden.
-*   **Interaktive Steuerung:**
-*   Während des Entwicklungsmodus stehen verschiedene Befehle zur Verfügung, um das Testverhalten zu steuern:
-*   `r`: Erneutes Ausführen aller Tests.
-*   `f`: Erneutes Ausführen der fehlgeschlagenen Tests.
-*   `b`: Wechselt zwischen dem Ausführen aller oder nur der fehlgeschlagenen Tests.
-*   `v`: Anzeigen von Fehlern.
-*   `p`: Pausieren der Tests.
-*   `i`: Anzeigen zusätzlicher Informationen zur Testausführung.
-*   `h`: Hilfe anzeigen.
-*   `q`: Beenden des Entwicklungsmodus.
+* **Automatische Testausführung:**
+Quarkus führt Tests automatisch aus, wenn Änderungen erkannt werden.
+
+* **Entwicklungsmodus:**
+Im Entwicklungsmodus (`quarkus dev`) sind Tests standardmäßig *pausiert*. Mit der Taste `r` können Tests manuell gestartet werden, wobei die Ergebnisse sofort angezeigt werden.
+
+* **Konfigurationsoptionen:**
+Das Verhalten von Continuous Testing kann in der `application.properties`-Datei angepasst werden:
+- `quarkus.test.continuous-testing=enabled`: Aktiviert automatisches Testen bei jeder Änderung.
+- `quarkus.test.continuous-testing=paused`: Deaktiviert automatisches Testen; Tests müssen manuell gestartet werden.
+
+* **Interaktive Steuerung im Entwicklungsmodus:**
+Verschiedene Befehle stehen zur Verfügung, um das Testen effizient zu steuern:
+- `r`: Alle Tests erneut ausführen.
+- `f`: Nur fehlgeschlagene Tests erneut ausführen.
+- `b`: Zwischen allen Tests und fehlgeschlagenen Tests umschalten.
+- `v`: Fehlerdetails anzeigen.
+- `p`: Tests pausieren.
+- `i`: Zusätzliche Testinformationen anzeigen.
+- `h`: Hilfe anzeigen.
+- `q`: Entwicklungsmodus beenden.
+
+Mit diesen Funktionen unterstützt Quarkus eine schnelle Rückmeldung während der Entwicklung und erleichtert das kontinuierliche Testen.
+
 
 
 
