@@ -52,12 +52,6 @@ image::images/continuous-testing-vs-automated-testing.png[Continuous Testing vs 
 |===
 | Tool | Open Source | Lizenz | Einsatzbereiche | Sprachen
 
-| Jenkins
-| Ja
-| MIT
-| CI/CD, Build-Automatisierung
-| Groovy, Java
-
 | Selenium
 | Ja
 | Apache 2.0
@@ -106,36 +100,6 @@ image::images/continuous-testing-vs-automated-testing.png[Continuous Testing vs 
 | Mocking für Unit- und Integrationstests
 | Java
 |===
-
-== Kriterienkatalog: Vergleich von CI/CD-Tools
-
-[cols="1,1,1,1"]
-|===
-| Tool | Preisgestaltung | Programmiersprachen | Containerisierung
-
-| Azure Pipelines
-| Kostenlos / Kostenpflichtig
-| .NET, Java, Python, Node.js
-| Ja
-
-| CircleCI
-| Kostenlos / Kostenpflichtig
-| Ruby, Python, Java
-| Ja
-
-| GitHub Actions
-| Kostenlos / Kostenpflichtig
-| Alle Docker-kompatiblen Sprachen
-| Ja
-
-| Jenkins
-| Kostenlos, Open Source
-| Alle Sprachen
-| Ja
-|===
-
-
-
 
 == Continuous Testing in Quarkus
 
