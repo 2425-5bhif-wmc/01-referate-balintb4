@@ -575,22 +575,24 @@ pre.rouge .gs {
 <li><a href="#_continuous_testing_vs_automated_testing">3. Continuous Testing vs Automated Testing</a></li>
 <li><a href="#_arten_von_tests_im_continuous_testing">4. Arten von Tests im Continuous Testing</a></li>
 <li><a href="#_herausforderungen_beim_continuous_testing">5. Herausforderungen beim Continuous Testing</a></li>
-<li><a href="#_continuous_testing_in_quarkus">6. Continuous Testing in Quarkus</a></li>
-<li><a href="#_funktionsweise_von_continuous_testing_in_quarkus">7. Funktionsweise von Continuous Testing in Quarkus</a>
+<li><a href="#_überblick_testframeworks_und_ihre_einsatzbereiche">6. Überblick: Testframeworks und ihre Einsatzbereiche</a></li>
+<li><a href="#_kriterienkatalog_vergleich_von_cicd_tools">7. Kriterienkatalog: Vergleich von CI/CD-Tools</a></li>
+<li><a href="#_continuous_testing_in_quarkus">8. Continuous Testing in Quarkus</a></li>
+<li><a href="#_funktionsweise_von_continuous_testing_in_quarkus">9. Funktionsweise von Continuous Testing in Quarkus</a>
 <ul class="sectlevel2">
-<li><a href="#_guide_und_weiterführende_informationen">7.1. Guide und weiterführende Informationen</a></li>
+<li><a href="#_guide_und_weiterführende_informationen">9.1. Guide und weiterführende Informationen</a></li>
 </ul>
 </li>
-<li><a href="#_demo">8. Demo</a>
+<li><a href="#_demo">10. Demo</a>
 <ul class="sectlevel2">
-<li><a href="#_hauptunterschiede_in_der_github_actions_konfiguration">8.1. Hauptunterschiede in der GitHub Actions Konfiguration</a></li>
+<li><a href="#_hauptunterschiede_in_der_github_actions_konfiguration">10.1. Hauptunterschiede in der GitHub Actions Konfiguration</a></li>
 </ul>
 </li>
-<li><a href="#_fazit">9. Fazit</a></li>
-<li><a href="#_anhang">10. Anhang</a>
+<li><a href="#_fazit">11. Fazit</a></li>
+<li><a href="#_anhang">12. Anhang</a>
 <ul class="sectlevel2">
-<li><a href="#_glossar">10.1. Glossar</a></li>
-<li><a href="#_häufig_gestellte_fragen_faq">10.2. Häufig gestellte Fragen (FAQ)</a></li>
+<li><a href="#_glossar">12.1. Glossar</a></li>
+<li><a href="#_häufig_gestellte_fragen_faq">12.2. Häufig gestellte Fragen (FAQ)</a></li>
 </ul>
 </li>
 </ul>
@@ -695,21 +697,26 @@ pre.rouge .gs {
 </li>
 </ul>
 </div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_überblick_testframeworks_und_ihre_einsatzbereiche"><a class="anchor" href="#_überblick_testframeworks_und_ihre_einsatzbereiche"></a>6. Überblick: Testframeworks und ihre Einsatzbereiche</h2>
+<div class="sectionbody">
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
-<col style="width: 11.1111%;">
-<col style="width: 11.1111%;">
-<col style="width: 22.2222%;">
+<col style="width: 16.6666%;">
+<col style="width: 16.6666%;">
+<col style="width: 16.6666%;">
 <col style="width: 33.3333%;">
-<col style="width: 22.2223%;">
+<col style="width: 16.6669%;">
 </colgroup>
 <thead>
 <tr>
 <th class="tableblock halign-left valign-top">Tool</th>
 <th class="tableblock halign-left valign-top">Open Source</th>
 <th class="tableblock halign-left valign-top">Lizenz</th>
-<th class="tableblock halign-left valign-top">Verwendung</th>
-<th class="tableblock halign-left valign-top">Programmiersprachen</th>
+<th class="tableblock halign-left valign-top">Einsatzbereiche</th>
+<th class="tableblock halign-left valign-top">Sprachen</th>
 </tr>
 </thead>
 <tbody>
@@ -717,63 +724,63 @@ pre.rouge .gs {
 <td class="tableblock halign-left valign-top"><p class="tableblock">Jenkins</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Ja</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">MIT</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">CI/CD-Automatisierung, Orchestrierung von Testabläufen, Build-Automatisierung</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Groovy, Java, uvm. (Plugins)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">CI/CD, Build-Automatisierung</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Groovy, Java</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Selenium</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Ja</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Apache License 2.0</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Automatisierung von Webbrowsern, UI-Tests, End-to-End-Tests</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Java, Python, C#, JavaScript, Ruby, uvm.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Apache 2.0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">UI-Tests, Web-Automatisierung</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Java, Python, C#, JavaScript, Ruby</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">JUnit</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Ja</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Eclipse Public License - v 2.0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Eclipse Public v2.0</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Unit-Tests</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Java</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">TestNG</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Ja</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Apache License 2.0</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Unit-Tests, Integrationstests, End-to-End-Tests, bietet mehr Flexibilität als JUnit</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Apache 2.0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Unit-, Integrationstests, End-to-End-Tests</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Java</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Cypress</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Ja</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">MIT</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">End-to-End-Tests von Webanwendungen</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">End-to-End-Webtests</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">JavaScript</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">JMeter</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Ja</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Apache License 2.0</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Lasttests, Performancetests, Stresstests</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Java (aber auch andere Protokolle testbar)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Apache 2.0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Last-, Performance-, Stresstests</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Java</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">SonarQube</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Teilweise</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Community Edition:</strong> LGPLv3&lt;br&gt;<strong>Kommerzielle Editionen:</strong> Proprietär</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Statische Code-Analyse, Erkennung von Sicherheitslücken, Code-Qualitätsprüfung</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Unterstützt über 25 Sprachen, z.B. Java, C#, C++, JavaScript, Python</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">LGPLv3/Proprietär</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Code-Analyse, Sicherheitsprüfung</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">25+ Sprachen (Java, C#, Python, etc.)</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Rest-Assured</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Ja</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Apache License 2.0</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Testen von REST-Services, API-Tests</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Java, Groovy</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Apache 2.0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">API-Tests (REST-Services)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Java</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Mockito</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Ja</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">MIT</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Mocking-Framework, Erstellung von Mock-Objekten für Unit- und Integrationstests</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Mocking für Unit- und Integrationstests</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Java</p></td>
 </tr>
 </tbody>
@@ -781,7 +788,54 @@ pre.rouge .gs {
 </div>
 </div>
 <div class="sect1">
-<h2 id="_continuous_testing_in_quarkus"><a class="anchor" href="#_continuous_testing_in_quarkus"></a>6. Continuous Testing in Quarkus</h2>
+<h2 id="_kriterienkatalog_vergleich_von_cicd_tools"><a class="anchor" href="#_kriterienkatalog_vergleich_von_cicd_tools"></a>7. Kriterienkatalog: Vergleich von CI/CD-Tools</h2>
+<div class="sectionbody">
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Tool</th>
+<th class="tableblock halign-left valign-top">Preisgestaltung</th>
+<th class="tableblock halign-left valign-top">Programmiersprachen</th>
+<th class="tableblock halign-left valign-top">Containerisierung</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Azure Pipelines</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Kostenlos / Kostenpflichtig</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">.NET, Java, Python, Node.js</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Ja</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">CircleCI</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Kostenlos / Kostenpflichtig</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Ruby, Python, Java</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Ja</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">GitHub Actions</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Kostenlos / Kostenpflichtig</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Alle Docker-kompatiblen Sprachen</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Ja</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Jenkins</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Kostenlos, Open Source</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Alle Sprachen</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Ja</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_continuous_testing_in_quarkus"><a class="anchor" href="#_continuous_testing_in_quarkus"></a>8. Continuous Testing in Quarkus</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Quarkus unterstützt Continuous Testing, eine Funktion, die es ermöglicht, Tests unmittelbar nach dem Speichern von Codeänderungen auszuführen. Dies beschleunigt den Entwicklungsprozess erheblich, da Entwickler sofortiges Feedback zu ihren Änderungen erhalten.</p>
@@ -789,62 +843,71 @@ pre.rouge .gs {
 </div>
 </div>
 <div class="sect1">
-<h2 id="_funktionsweise_von_continuous_testing_in_quarkus"><a class="anchor" href="#_funktionsweise_von_continuous_testing_in_quarkus"></a>7. Funktionsweise von Continuous Testing in Quarkus</h2>
+<h2 id="_funktionsweise_von_continuous_testing_in_quarkus"><a class="anchor" href="#_funktionsweise_von_continuous_testing_in_quarkus"></a>9. Funktionsweise von Continuous Testing in Quarkus</h2>
 <div class="sectionbody">
 <div class="ulist">
 <ul>
 <li>
-<p><strong>Automatische Testausführung:</strong></p>
+<p><strong>Automatische Testausführung:</strong>
+Quarkus führt Tests automatisch aus, wenn Änderungen erkannt werden.</p>
 </li>
 <li>
-<p><strong>Entwicklungsmodus:</strong> Durch Starten des Quarkus-Entwicklungsmodus mit dem Befehl <code>quarkus dev</code> werden Tests standardmäßig <strong>pausiert</strong>. Die Tests können mit der Taste <code>r</code> gestartet werden und liefern sofortige Rückmeldungen zu den Testergebnissen.</p>
+<p><strong>Entwicklungsmodus:</strong>
+Im Entwicklungsmodus (<code>quarkus dev</code>) sind Tests standardmäßig <strong>pausiert</strong>. Mit der Taste <code>r</code> können Tests manuell gestartet werden, wobei die Ergebnisse sofort angezeigt werden.</p>
 </li>
 <li>
-<p><strong>Konfigurierbarkeit:</strong></p>
+<p><strong>Konfigurationsoptionen:</strong>
+Das Verhalten von Continuous Testing kann in der <code>application.properties</code>-Datei angepasst werden:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><code>quarkus.test.continuous-testing=enabled</code>: Aktiviert automatisches Testen bei jeder Änderung.</p>
 </li>
 <li>
-<p>Über die <code>application.properties</code>-Datei kann das Verhalten des Continuous Testings angepasst werden.</p>
+<p><code>quarkus.test.continuous-testing=paused</code>: Deaktiviert automatisches Testen; Tests müssen manuell gestartet werden.</p>
+</li>
+</ul>
+</div>
 </li>
 <li>
-<p>Durch Setzen von <code>quarkus.test.continuous-testing=enabled</code> wird das automatische Testen bei jedem Speichern aktiviert.</p>
+<p><strong>Interaktive Steuerung im Entwicklungsmodus:</strong>
+Verschiedene Befehle stehen zur Verfügung, um das Testen effizient zu steuern:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><code>r</code>: Alle Tests erneut ausführen.</p>
 </li>
 <li>
-<p>Mit <code>quarkus.test.continuous-testing=paused</code> wird das automatische Testen deaktiviert und die Tests müssen manuell gestartet werden.</p>
+<p><code>f</code>: Nur fehlgeschlagene Tests erneut ausführen.</p>
 </li>
 <li>
-<p><strong>Interaktive Steuerung:</strong></p>
+<p><code>b</code>: Zwischen allen Tests und fehlgeschlagenen Tests umschalten.</p>
 </li>
 <li>
-<p>Während des Entwicklungsmodus stehen verschiedene Befehle zur Verfügung, um das Testverhalten zu steuern:</p>
+<p><code>v</code>: Fehlerdetails anzeigen.</p>
 </li>
 <li>
-<p><code>r</code>: Erneutes Ausführen aller Tests.</p>
+<p><code>p</code>: Tests pausieren.</p>
 </li>
 <li>
-<p><code>f</code>: Erneutes Ausführen der fehlgeschlagenen Tests.</p>
-</li>
-<li>
-<p><code>b</code>: Wechselt zwischen dem Ausführen aller oder nur der fehlgeschlagenen Tests.</p>
-</li>
-<li>
-<p><code>v</code>: Anzeigen von Fehlern.</p>
-</li>
-<li>
-<p><code>p</code>: Pausieren der Tests.</p>
-</li>
-<li>
-<p><code>i</code>: Anzeigen zusätzlicher Informationen zur Testausführung.</p>
+<p><code>i</code>: Zusätzliche Testinformationen anzeigen.</p>
 </li>
 <li>
 <p><code>h</code>: Hilfe anzeigen.</p>
 </li>
 <li>
-<p><code>q</code>: Beenden des Entwicklungsmodus.</p>
+<p><code>q</code>: Entwicklungsmodus beenden.</p>
 </li>
 </ul>
 </div>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Mit diesen Funktionen unterstützt Quarkus eine schnelle Rückmeldung während der Entwicklung und erleichtert das kontinuierliche Testen.</p>
+</div>
 <div class="sect2">
-<h3 id="_guide_und_weiterführende_informationen"><a class="anchor" href="#_guide_und_weiterführende_informationen"></a>7.1. Guide und weiterführende Informationen</h3>
+<h3 id="_guide_und_weiterführende_informationen"><a class="anchor" href="#_guide_und_weiterführende_informationen"></a>9.1. Guide und weiterführende Informationen</h3>
 <div class="ulist">
 <ul>
 <li>
@@ -862,7 +925,7 @@ pre.rouge .gs {
 </div>
 </div>
 <div class="sect1">
-<h2 id="_demo"><a class="anchor" href="#_demo"></a>8. Demo</h2>
+<h2 id="_demo"><a class="anchor" href="#_demo"></a>10. Demo</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Im Repository <a href="https://github.com/2425-5bhif-wmc/01-referate-balintb4">01-referate-balintb4</a> finden Sie neben dieser Dokumentation zwei Demo-Projekte.</p>
@@ -881,7 +944,7 @@ pre.rouge .gs {
 </ul>
 </div>
 <div class="sect2">
-<h3 id="_hauptunterschiede_in_der_github_actions_konfiguration"><a class="anchor" href="#_hauptunterschiede_in_der_github_actions_konfiguration"></a>8.1. Hauptunterschiede in der GitHub Actions Konfiguration</h3>
+<h3 id="_hauptunterschiede_in_der_github_actions_konfiguration"><a class="anchor" href="#_hauptunterschiede_in_der_github_actions_konfiguration"></a>10.1. Hauptunterschiede in der GitHub Actions Konfiguration</h3>
 <div class="paragraph">
 <p>Der Hauptunterschied zwischen den beiden Projekten liegt in der Art und Weise, wie die PostgreSQL-Datenbank für die Tests bereitgestellt wird. Das Projekt <code>continuous-testing-demo</code> erfordert manuelle Schritte, die im Folgenden in der Workflow-Datei dargestellt sind:</p>
 </div>
@@ -1022,7 +1085,7 @@ pre.rouge .gs {
 </div>
 </div>
 <div class="sect1">
-<h2 id="_fazit"><a class="anchor" href="#_fazit"></a>9. Fazit</h2>
+<h2 id="_fazit"><a class="anchor" href="#_fazit"></a>11. Fazit</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Continuous Testing ist ein mächtiger Ansatz, um die Qualität von Software zu verbessern und die Entwicklungszeit zu verkürzen. Durch die Automatisierung von Tests und die Integration in CI/CD-Pipelines wird sichergestellt, dass Fehler frühzeitig erkannt und behoben werden können. Quarkus bietet mit seinem Continuous-Testing-Feature eine hervorragende Unterstützung für diesen Ansatz.</p>
@@ -1030,10 +1093,10 @@ pre.rouge .gs {
 </div>
 </div>
 <div class="sect1">
-<h2 id="_anhang"><a class="anchor" href="#_anhang"></a>10. Anhang</h2>
+<h2 id="_anhang"><a class="anchor" href="#_anhang"></a>12. Anhang</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="_glossar"><a class="anchor" href="#_glossar"></a>10.1. Glossar</h3>
+<h3 id="_glossar"><a class="anchor" href="#_glossar"></a>12.1. Glossar</h3>
 <div class="ulist">
 <ul>
 <li>
@@ -1061,7 +1124,7 @@ pre.rouge .gs {
 </div>
 </div>
 <div class="sect2">
-<h3 id="_häufig_gestellte_fragen_faq"><a class="anchor" href="#_häufig_gestellte_fragen_faq"></a>10.2. Häufig gestellte Fragen (FAQ)</h3>
+<h3 id="_häufig_gestellte_fragen_faq"><a class="anchor" href="#_häufig_gestellte_fragen_faq"></a>12.2. Häufig gestellte Fragen (FAQ)</h3>
 <div class="ulist">
 <ul>
 <li>
