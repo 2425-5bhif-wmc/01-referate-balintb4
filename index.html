@@ -591,23 +591,22 @@ pre.rouge .gs {
 <li><a href="#_arten_von_tests_im_continuous_testing">13. Arten von Tests im Continuous Testing</a></li>
 <li><a href="#_herausforderungen_beim_continuous_testing">14. Herausforderungen beim Continuous Testing</a></li>
 <li><a href="#_überblick_testframeworks_und_ihre_einsatzbereiche">15. Überblick: Testframeworks und ihre Einsatzbereiche</a></li>
-<li><a href="#_kriterienkatalog_vergleich_von_cicd_tools">16. Kriterienkatalog: Vergleich von CI/CD-Tools</a></li>
-<li><a href="#_continuous_testing_in_quarkus">17. Continuous Testing in Quarkus</a></li>
-<li><a href="#_funktionsweise_von_continuous_testing_in_quarkus">18. Funktionsweise von Continuous Testing in Quarkus</a>
+<li><a href="#_continuous_testing_in_quarkus">16. Continuous Testing in Quarkus</a></li>
+<li><a href="#_funktionsweise_von_continuous_testing_in_quarkus">17. Funktionsweise von Continuous Testing in Quarkus</a>
 <ul class="sectlevel2">
-<li><a href="#_guide_und_weiterführende_informationen">18.1. Guide und weiterführende Informationen</a></li>
+<li><a href="#_guide_und_weiterführende_informationen">17.1. Guide und weiterführende Informationen</a></li>
 </ul>
 </li>
-<li><a href="#_demo">19. Demo</a>
+<li><a href="#_demo">18. Demo</a>
 <ul class="sectlevel2">
-<li><a href="#_hauptunterschiede_in_der_github_actions_konfiguration">19.1. Hauptunterschiede in der GitHub Actions Konfiguration</a></li>
+<li><a href="#_hauptunterschiede_in_der_github_actions_konfiguration">18.1. Hauptunterschiede in der GitHub Actions Konfiguration</a></li>
 </ul>
 </li>
-<li><a href="#_fazit">20. Fazit</a></li>
-<li><a href="#_anhang">21. Anhang</a>
+<li><a href="#_fazit">19. Fazit</a></li>
+<li><a href="#_anhang">20. Anhang</a>
 <ul class="sectlevel2">
-<li><a href="#_glossar">21.1. Glossar</a></li>
-<li><a href="#_häufig_gestellte_fragen_faq">21.2. Häufig gestellte Fragen (FAQ)</a></li>
+<li><a href="#_glossar">20.1. Glossar</a></li>
+<li><a href="#_häufig_gestellte_fragen_faq">20.2. Häufig gestellte Fragen (FAQ)</a></li>
 </ul>
 </li>
 </ul>
@@ -1095,13 +1094,6 @@ Die Verwendung von Dev Services macht das Setup der Datenbank sehr einfach, ohne
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Jenkins</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Ja</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">MIT</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">CI/CD, Build-Automatisierung</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Groovy, Java</p></td>
-</tr>
-<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Selenium</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Ja</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Apache 2.0</p></td>
@@ -1162,54 +1154,7 @@ Die Verwendung von Dev Services macht das Setup der Datenbank sehr einfach, ohne
 </div>
 </div>
 <div class="sect1">
-<h2 id="_kriterienkatalog_vergleich_von_cicd_tools"><a class="anchor" href="#_kriterienkatalog_vergleich_von_cicd_tools"></a>16. Kriterienkatalog: Vergleich von CI/CD-Tools</h2>
-<div class="sectionbody">
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 25%;">
-<col style="width: 25%;">
-<col style="width: 25%;">
-<col style="width: 25%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Tool</th>
-<th class="tableblock halign-left valign-top">Preisgestaltung</th>
-<th class="tableblock halign-left valign-top">Programmiersprachen</th>
-<th class="tableblock halign-left valign-top">Containerisierung</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Azure Pipelines</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Kostenlos / Kostenpflichtig</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">.NET, Java, Python, Node.js</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Ja</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">CircleCI</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Kostenlos / Kostenpflichtig</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Ruby, Python, Java</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Ja</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">GitHub Actions</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Kostenlos / Kostenpflichtig</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Alle Docker-kompatiblen Sprachen</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Ja</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Jenkins</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Kostenlos, Open Source</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Alle Sprachen</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Ja</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_continuous_testing_in_quarkus"><a class="anchor" href="#_continuous_testing_in_quarkus"></a>17. Continuous Testing in Quarkus</h2>
+<h2 id="_continuous_testing_in_quarkus"><a class="anchor" href="#_continuous_testing_in_quarkus"></a>16. Continuous Testing in Quarkus</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Quarkus unterstützt Continuous Testing, eine Funktion, die es ermöglicht, Tests unmittelbar nach dem Speichern von Codeänderungen auszuführen. Dies beschleunigt den Entwicklungsprozess erheblich, da Entwickler sofortiges Feedback zu ihren Änderungen erhalten.</p>
@@ -1217,7 +1162,7 @@ Die Verwendung von Dev Services macht das Setup der Datenbank sehr einfach, ohne
 </div>
 </div>
 <div class="sect1">
-<h2 id="_funktionsweise_von_continuous_testing_in_quarkus"><a class="anchor" href="#_funktionsweise_von_continuous_testing_in_quarkus"></a>18. Funktionsweise von Continuous Testing in Quarkus</h2>
+<h2 id="_funktionsweise_von_continuous_testing_in_quarkus"><a class="anchor" href="#_funktionsweise_von_continuous_testing_in_quarkus"></a>17. Funktionsweise von Continuous Testing in Quarkus</h2>
 <div class="sectionbody">
 <div class="ulist">
 <ul>
@@ -1281,7 +1226,7 @@ Verschiedene Befehle stehen zur Verfügung, um das Testen effizient zu steuern:<
 <p>Mit diesen Funktionen unterstützt Quarkus eine schnelle Rückmeldung während der Entwicklung und erleichtert das kontinuierliche Testen.</p>
 </div>
 <div class="sect2">
-<h3 id="_guide_und_weiterführende_informationen"><a class="anchor" href="#_guide_und_weiterführende_informationen"></a>18.1. Guide und weiterführende Informationen</h3>
+<h3 id="_guide_und_weiterführende_informationen"><a class="anchor" href="#_guide_und_weiterführende_informationen"></a>17.1. Guide und weiterführende Informationen</h3>
 <div class="ulist">
 <ul>
 <li>
@@ -1299,7 +1244,7 @@ Verschiedene Befehle stehen zur Verfügung, um das Testen effizient zu steuern:<
 </div>
 </div>
 <div class="sect1">
-<h2 id="_demo"><a class="anchor" href="#_demo"></a>19. Demo</h2>
+<h2 id="_demo"><a class="anchor" href="#_demo"></a>18. Demo</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Im Repository <a href="https://github.com/2425-5bhif-wmc/01-referate-balintb4">01-referate-balintb4</a> finden Sie neben dieser Dokumentation zwei Demo-Projekte.</p>
@@ -1318,7 +1263,7 @@ Verschiedene Befehle stehen zur Verfügung, um das Testen effizient zu steuern:<
 </ul>
 </div>
 <div class="sect2">
-<h3 id="_hauptunterschiede_in_der_github_actions_konfiguration"><a class="anchor" href="#_hauptunterschiede_in_der_github_actions_konfiguration"></a>19.1. Hauptunterschiede in der GitHub Actions Konfiguration</h3>
+<h3 id="_hauptunterschiede_in_der_github_actions_konfiguration"><a class="anchor" href="#_hauptunterschiede_in_der_github_actions_konfiguration"></a>18.1. Hauptunterschiede in der GitHub Actions Konfiguration</h3>
 <div class="paragraph">
 <p>Der Hauptunterschied zwischen den beiden Projekten liegt in der Art und Weise, wie die PostgreSQL-Datenbank für die Tests bereitgestellt wird. Das Projekt <code>continuous-testing-demo</code> erfordert manuelle Schritte, die im Folgenden in der Workflow-Datei dargestellt sind:</p>
 </div>
@@ -1459,7 +1404,7 @@ Verschiedene Befehle stehen zur Verfügung, um das Testen effizient zu steuern:<
 </div>
 </div>
 <div class="sect1">
-<h2 id="_fazit"><a class="anchor" href="#_fazit"></a>20. Fazit</h2>
+<h2 id="_fazit"><a class="anchor" href="#_fazit"></a>19. Fazit</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Continuous Testing ist ein mächtiger Ansatz, um die Qualität von Software zu verbessern und die Entwicklungszeit zu verkürzen. Durch die Automatisierung von Tests und die Integration in CI/CD-Pipelines wird sichergestellt, dass Fehler frühzeitig erkannt und behoben werden können. Quarkus bietet mit seinem Continuous-Testing-Feature eine hervorragende Unterstützung für diesen Ansatz.</p>
@@ -1467,10 +1412,10 @@ Verschiedene Befehle stehen zur Verfügung, um das Testen effizient zu steuern:<
 </div>
 </div>
 <div class="sect1">
-<h2 id="_anhang"><a class="anchor" href="#_anhang"></a>21. Anhang</h2>
+<h2 id="_anhang"><a class="anchor" href="#_anhang"></a>20. Anhang</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="_glossar"><a class="anchor" href="#_glossar"></a>21.1. Glossar</h3>
+<h3 id="_glossar"><a class="anchor" href="#_glossar"></a>20.1. Glossar</h3>
 <div class="ulist">
 <ul>
 <li>
@@ -1498,7 +1443,7 @@ Verschiedene Befehle stehen zur Verfügung, um das Testen effizient zu steuern:<
 </div>
 </div>
 <div class="sect2">
-<h3 id="_häufig_gestellte_fragen_faq"><a class="anchor" href="#_häufig_gestellte_fragen_faq"></a>21.2. Häufig gestellte Fragen (FAQ)</h3>
+<h3 id="_häufig_gestellte_fragen_faq"><a class="anchor" href="#_häufig_gestellte_fragen_faq"></a>20.2. Häufig gestellte Fragen (FAQ)</h3>
 <div class="ulist">
 <ul>
 <li>
