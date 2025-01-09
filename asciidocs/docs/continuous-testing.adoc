@@ -23,7 +23,6 @@ image::images/continuos-testing.png[Continuous Testing Workflow]
 
 == Hauptkomponenten von Continuous Testing
 
-*   **Automatisierung:** Der Einsatz von Tools zur Automatisierung von Tests ist entscheidend, um schnelle und wiederholbare Testergebnisse zu erzielen. Dies reduziert die manuelle Arbeit und beschleunigt den Testprozess erheblich.
 *   **Integration in CI/CD-Pipelines:** Tests werden nahtlos in Continuous Integration (CI) und Continuous Delivery (CD) Pipelines eingebunden, um bei jedem Code-Commit eine sofortige Qualitätsbewertung zu ermöglichen. So wird sichergestellt, dass Fehler frühzeitig erkannt und behoben werden können.
 *   **Stabile Testumgebungen:** Die Bereitstellung konsistenter und produktionsähnlicher Testumgebungen stellt sicher, dass Testergebnisse zuverlässig und aussagekräftig sind. Inkonsistenzen zwischen Test- und Produktionsumgebungen können zu unerwarteten Problemen führen.
 
