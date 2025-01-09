@@ -29,7 +29,7 @@ image::images/continuos-testing.png[Continuous Testing Workflow]
 
 == Continuous Testing vs Automated Testing
 
-image::images/continuous-testing-vs-automated-testing.png[Continuous Testing vs Automated Testing,800,450]
+image::images/continuous-testing-vs-automated-testing.png[Continuous Testing vs Automated Testing]
 
 == Arten von Tests im Continuous Testing
 
