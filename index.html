@@ -7,7 +7,7 @@
 <meta name="generator" content="Asciidoctor 2.0.20">
 <meta name="author" content="Balint Balazs">
 <link rel="icon" type="image/png" href="themes/favicon.png">
-<title>Quarkus-Anwendung mit PostgreSQL und Dev Services</title>
+<title>Continuous Testing</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /*! Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
@@ -561,7 +561,7 @@ pre.rouge .gs {
 </head>
 <body class="book toc2 toc-left">
 <div id="header">
-<h1>Quarkus-Anwendung mit PostgreSQL und Dev Services</h1>
+<h1>Continuous Testing</h1>
 <div class="details">
 <span id="author" class="author">Balint Balazs</span><br>
 <span id="revnumber">version 1.1,</span>
@@ -570,45 +570,52 @@ pre.rouge .gs {
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#_voraussetzungen">1. Voraussetzungen</a></li>
-<li><a href="#_projekt_erstellen">2. Projekt erstellen</a></li>
-<li><a href="#_abhängigkeiten">3. Abhängigkeiten</a></li>
-<li><a href="#_konfiguration_der_postgresql_datenbank">4. Konfiguration der PostgreSQL-Datenbank</a>
+<li><a href="#_was_ist_continuous_testing">1. Was ist Continuous Testing?</a></li>
+<li><a href="#_hauptkomponenten_von_continuous_testing">2. Hauptkomponenten von Continuous Testing</a></li>
+<li><a href="#_continuous_testing_vs_automated_testing">3. Continuous Testing vs Automated Testing</a></li>
+<li><a href="#_arten_von_tests_im_continuous_testing">4. Arten von Tests im Continuous Testing</a></li>
+<li><a href="#_herausforderungen_beim_continuous_testing">5. Herausforderungen beim Continuous Testing</a></li>
+<li><a href="#_überblick_testframeworks_und_ihre_einsatzbereiche">6. Überblick: Testframeworks und ihre Einsatzbereiche</a></li>
+<li><a href="#_continuous_testing_in_quarkus">7. Continuous Testing in Quarkus</a></li>
+<li><a href="#_funktionsweise_von_continuous_testing_in_quarkus">8. Funktionsweise von Continuous Testing in Quarkus</a>
 <ul class="sectlevel2">
-<li><a href="#_quarkus_datenbank_konfiguration">4.1. Quarkus Datenbank Konfiguration</a></li>
+<li><a href="#_guide_und_weiterführende_informationen">8.1. Guide und weiterführende Informationen</a></li>
 </ul>
 </li>
-<li><a href="#_erstellen_der_person_entität">5. Erstellen der <code>Person</code>-Entität</a></li>
-<li><a href="#_erstellen_eines_rest_endpunkts">6. Erstellen eines REST Endpunkts</a></li>
-<li><a href="#_optional_datenbank_mit_databaseseed_initialisieren">7. Optional: Datenbank mit DatabaseSeed initialisieren</a></li>
-<li><a href="#_anwendung_starten">8. Anwendung starten</a></li>
-<li><a href="#_zusammenfassung">9. Zusammenfassung</a></li>
-<li><a href="#_continuous_testing">Continuous Testing</a>
+<li><a href="#_demo">9. Demo</a>
+<ul class="sectlevel2">
+<li><a href="#_hauptunterschiede_in_der_github_actions_konfiguration">9.1. Hauptunterschiede in der GitHub Actions Konfiguration</a></li>
+</ul>
+</li>
+<li><a href="#_fazit">10. Fazit</a></li>
+<li><a href="#_anhang">11. Anhang</a>
+<ul class="sectlevel2">
+<li><a href="#_glossar">11.1. Glossar</a></li>
+<li><a href="#_häufig_gestellte_fragen_faq">11.2. Häufig gestellte Fragen (FAQ)</a></li>
+</ul>
+</li>
+<li><a href="#_quarkus_anwendung_mit_postgresql_und_dev_services">Quarkus-Anwendung mit PostgreSQL und Dev Services</a>
 <ul class="sectlevel1">
-<li><a href="#_was_ist_continuous_testing">10. Was ist Continuous Testing?</a></li>
-<li><a href="#_hauptkomponenten_von_continuous_testing">11. Hauptkomponenten von Continuous Testing</a></li>
-<li><a href="#_continuous_testing_vs_automated_testing">12. Continuous Testing vs Automated Testing</a></li>
-<li><a href="#_arten_von_tests_im_continuous_testing">13. Arten von Tests im Continuous Testing</a></li>
-<li><a href="#_herausforderungen_beim_continuous_testing">14. Herausforderungen beim Continuous Testing</a></li>
-<li><a href="#_überblick_testframeworks_und_ihre_einsatzbereiche">15. Überblick: Testframeworks und ihre Einsatzbereiche</a></li>
-<li><a href="#_continuous_testing_in_quarkus">16. Continuous Testing in Quarkus</a></li>
-<li><a href="#_funktionsweise_von_continuous_testing_in_quarkus">17. Funktionsweise von Continuous Testing in Quarkus</a>
+<li><a href="#_einleitung">12. Einleitung</a>
 <ul class="sectlevel2">
-<li><a href="#_guide_und_weiterführende_informationen">17.1. Guide und weiterführende Informationen</a></li>
+<li><a href="#_was_sind_devservices">12.1. Was sind Devservices?</a></li>
+<li><a href="#_vorteile_von_quarkus_dev_services">12.2. Vorteile von Quarkus Dev Services</a></li>
+<li><a href="#_dienste_die_von_quarkus_dev_services_unterstützt_werden">12.3. Dienste, die von Quarkus Dev Services unterstützt werden</a></li>
 </ul>
 </li>
-<li><a href="#_demo">18. Demo</a>
+<li><a href="#_voraussetzungen">13. Voraussetzungen</a></li>
+<li><a href="#_projekt_erstellen">14. Projekt erstellen</a></li>
+<li><a href="#_abhängigkeiten">15. Abhängigkeiten</a></li>
+<li><a href="#_konfiguration_der_postgresql_datenbank">16. Konfiguration der PostgreSQL-Datenbank</a>
 <ul class="sectlevel2">
-<li><a href="#_hauptunterschiede_in_der_github_actions_konfiguration">18.1. Hauptunterschiede in der GitHub Actions Konfiguration</a></li>
+<li><a href="#_quarkus_datenbank_konfiguration">16.1. Quarkus Datenbank Konfiguration</a></li>
 </ul>
 </li>
-<li><a href="#_fazit">19. Fazit</a></li>
-<li><a href="#_anhang">20. Anhang</a>
-<ul class="sectlevel2">
-<li><a href="#_glossar">20.1. Glossar</a></li>
-<li><a href="#_häufig_gestellte_fragen_faq">20.2. Häufig gestellte Fragen (FAQ)</a></li>
-</ul>
-</li>
+<li><a href="#_erstellen_der_person_entität">17. Erstellen der <code>Person</code>-Entität</a></li>
+<li><a href="#_erstellen_eines_rest_endpunkts">18. Erstellen eines REST Endpunkts</a></li>
+<li><a href="#_optional_datenbank_mit_databaseseed_initialisieren">19. Optional: Datenbank mit DatabaseSeed initialisieren</a></li>
+<li><a href="#_anwendung_starten">20. Anwendung starten</a></li>
+<li><a href="#_zusammenfassung">21. Zusammenfassung</a></li>
 </ul>
 </li>
 </ul>
@@ -616,369 +623,14 @@ pre.rouge .gs {
 </div>
 <div id="content">
 <div class="sect1">
-<h2 id="_voraussetzungen"><a class="anchor" href="#_voraussetzungen"></a>1. Voraussetzungen</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Bevor du beginnst, stelle sicher, dass du die folgenden Tools installiert hast:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p><strong>Java 17</strong> oder höher</p>
-</li>
-<li>
-<p><strong>Maven</strong></p>
-</li>
-<li>
-<p><strong>Docker</strong> (für die Ausführung von Dev Services)</p>
-</li>
-<li>
-<p><strong>PostgreSQL</strong> (für den direkten Zugriff, wenn nötig)</p>
-</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_projekt_erstellen"><a class="anchor" href="#_projekt_erstellen"></a>2. Projekt erstellen</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Erstellen Sie ein neues Quarkus-Projekt mit den notwendigen Erweiterungen, indem Sie den folgenden Befehl in Ihrem Terminal ausführen:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="rouge highlight"><code data-lang="bash">mvn io.quarkus.platform:quarkus-maven-plugin:3.6.4:create <span class="se">\</span>
-    <span class="nt">-DprojectGroupId</span><span class="o">=</span>com.example <span class="se">\</span>
-    <span class="nt">-DprojectArtifactId</span><span class="o">=</span>quarkus-postgres-app <span class="se">\</span>
-    <span class="nt">-DclassName</span><span class="o">=</span><span class="s2">"com.example.resource.PersonResource"</span> <span class="se">\</span>
-    <span class="nt">-Dextensions</span><span class="o">=</span><span class="s2">"resteasy-jackson,hibernate-orm-panache,jdbc-postgresql"</span>
-<span class="nb">cd </span>quarkus-postgres-app</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Dieser Befehl erstellt ein neues Quarkus-Projekt mit:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p><code>resteasy-jackson</code>: Für die Serialisierung und Deserialisierung von JSON in den REST-Endpunkten.</p>
-</li>
-<li>
-<p><code>hibernate-orm-panache</code>: Für die Datenbankinteraktion mit Panache.</p>
-</li>
-<li>
-<p><code>jdbc-postgresql</code>: Für die Verbindung zur PostgreSQL-Datenbank.</p>
-</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_abhängigkeiten"><a class="anchor" href="#_abhängigkeiten"></a>3. Abhängigkeiten</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Stelle sicher, dass die folgenden Abhängigkeiten
-in deiner pom.xml (für Maven) enthalten sind:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="rouge highlight"><code data-lang="xml"><span class="nt">&lt;dependencies&gt;</span>
-<span class="c">&lt;!-- Quarkus RESTEasy für REST APIs --&gt;</span>
-<span class="nt">&lt;dependency&gt;</span>
-<span class="nt">&lt;groupId&gt;</span>io.quarkus<span class="nt">&lt;/groupId&gt;</span>
-<span class="nt">&lt;artifactId&gt;</span>quarkus-resteasy<span class="nt">&lt;/artifactId&gt;</span>
-<span class="nt">&lt;/dependency&gt;</span>
-
-    <span class="c">&lt;!-- Quarkus Hibernate ORM für die Datenbankintegration --&gt;</span>
-    <span class="nt">&lt;dependency&gt;</span>
-        <span class="nt">&lt;groupId&gt;</span>io.quarkus<span class="nt">&lt;/groupId&gt;</span>
-        <span class="nt">&lt;artifactId&gt;</span>quarkus-hibernate-orm-panache<span class="nt">&lt;/artifactId&gt;</span>
-    <span class="nt">&lt;/dependency&gt;</span>
-
-    <span class="c">&lt;!-- PostgreSQL JDBC-Treiber --&gt;</span>
-    <span class="nt">&lt;dependency&gt;</span>
-        <span class="nt">&lt;groupId&gt;</span>org.postgresql<span class="nt">&lt;/groupId&gt;</span>
-        <span class="nt">&lt;artifactId&gt;</span>postgresql<span class="nt">&lt;/artifactId&gt;</span>
-    <span class="nt">&lt;/dependency&gt;</span>
-<span class="nt">&lt;/dependencies&gt;</span></code></pre>
-</div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_konfiguration_der_postgresql_datenbank"><a class="anchor" href="#_konfiguration_der_postgresql_datenbank"></a>4. Konfiguration der PostgreSQL-Datenbank</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Quarkus Dev Services
-wird automatisch eine PostgreSQL-Datenbank für dich starten.
-Du musst jedoch die Verbindungsdetails in der Konfiguration festlegen.
-Öffne die Datei <code>src/main/resources/application.properties</code>
-und füge die folgenden Konfigurationen hinzu:</p>
-</div>
-<div class="sect2">
-<h3 id="_quarkus_datenbank_konfiguration"><a class="anchor" href="#_quarkus_datenbank_konfiguration"></a>4.1. Quarkus Datenbank Konfiguration</h3>
-<div class="listingblock">
-<div class="content">
-<pre class="rouge highlight"><code data-lang="properties"><span class="py">quarkus.datasource.db-kind</span><span class="p">=</span><span class="s">postgresql </span><i class="conum" data-value="1"></i><b>(1)</b>
-<span class="py">quarkus.datasource.username</span><span class="p">=</span><span class="s">your_username </span><i class="conum" data-value="2"></i><b>(2)</b>
-<span class="py">quarkus.datasource.password</span><span class="p">=</span><span class="s">your_password </span><i class="conum" data-value="3"></i><b>(3)</b>
-
-<span class="py">quarkus.hibernate-orm.database.generation</span><span class="p">=</span><span class="s">update </span><i class="conum" data-value="4"></i><b>(4)</b>
-<span class="py">quarkus.hibernate-orm.log.sql</span><span class="p">=</span><span class="s">true </span><i class="conum" data-value="5"></i><b>(5)</b>
-<span class="py">quarkus.hibernate-orm.log.format-sql</span><span class="p">=</span><span class="s">true </span><i class="conum" data-value="6"></i><b>(6)</b>
-
-<span class="py">quarkus.datasource.devservices.enabled</span><span class="p">=</span><span class="s">true </span><i class="conum" data-value="7"></i><b>(7)</b>
-<span class="py">quarkus.datasource.devservices.image-name</span><span class="p">=</span><span class="s">postgres:latest </span><i class="conum" data-value="8"></i><b>(8)</b></code></pre>
-</div>
-</div>
-<details>
-<summary class="title">Erklärung:</summary>
-<div class="content">
-<div class="colist arabic">
-<table>
-<tr>
-<td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>Gibt an, dass PostgreSQL als Datenbank verwendet wird.</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>(Optimal) Der Benutzername für den PostgreSQL-Datenbankzugriff.</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="3"></i><b>3</b></td>
-<td>(Optimal) Das Passwort für den PostgreSQL-Datenbankzugriff.</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="4"></i><b>4</b></td>
-<td>(Optimal) Sagt Hibernate, dass es die Datenbankstruktur beim Start aktualisieren soll.</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="5"></i><b>5</b></td>
-<td>(Optimal) Aktiviert das SQL-Logging, damit SQL-Abfragen im Log sichtbar sind.</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="6"></i><b>6</b></td>
-<td>(Optimal) Formatiert SQL-Abfragen für bessere Lesbarkeit im Log.</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="7"></i><b>7</b></td>
-<td>Aktiviert Dev Services, die eine Datenbank im Docker-Container starten.</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="8"></i><b>8</b></td>
-<td>Gibt das Docker-Image für PostgreSQL an, das verwendet werden soll.</td>
-</tr>
-</table>
-</div>
-</div>
-</details>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_erstellen_der_person_entität"><a class="anchor" href="#_erstellen_der_person_entität"></a>5. Erstellen der <code>Person</code>-Entität</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Nun erstellst du eine Entität, die du in der Datenbank speichern möchtest.
-Erstelle die Datei <code>src/main/java/com/example/model/Person.java</code>:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="rouge highlight"><code data-lang="java"><span class="kn">package</span> <span class="nn">com.example.model</span><span class="o">;</span>
-
-<span class="kn">import</span> <span class="nn">io.quarkus.hibernate.orm.panache.PanacheEntity</span><span class="o">;</span>
-
-<span class="kn">import</span> <span class="nn">javax.persistence.Entity</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">javax.persistence.Table</span><span class="o">;</span>
-
-<span class="nd">@Entity</span>
-<span class="nd">@Table</span><span class="o">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">"person"</span><span class="o">)</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Person</span> <span class="kd">extends</span> <span class="nc">PanacheEntity</span> <span class="o">{</span>
-    <span class="kd">public</span> <span class="nc">String</span> <span class="n">firstName</span><span class="o">;</span>
-    <span class="kd">public</span> <span class="nc">String</span> <span class="n">lastName</span><span class="o">;</span>
-    <span class="kd">public</span> <span class="nc">String</span> <span class="n">email</span><span class="o">;</span>
-
-    <span class="kd">public</span> <span class="nf">Person</span><span class="o">()</span> <span class="o">{</span>
-    <span class="o">}</span>
-
-    <span class="kd">public</span> <span class="nf">Person</span><span class="o">(</span><span class="nc">String</span> <span class="n">firstName</span><span class="o">,</span> <span class="nc">String</span> <span class="n">lastName</span><span class="o">,</span> <span class="nc">String</span> <span class="n">email</span><span class="o">)</span> <span class="o">{</span>
-        <span class="k">this</span><span class="o">.</span><span class="na">firstName</span> <span class="o">=</span> <span class="n">firstName</span><span class="o">;</span>
-        <span class="k">this</span><span class="o">.</span><span class="na">lastName</span> <span class="o">=</span> <span class="n">lastName</span><span class="o">;</span>
-        <span class="k">this</span><span class="o">.</span><span class="na">email</span> <span class="o">=</span> <span class="n">email</span><span class="o">;</span>
-    <span class="o">}</span>
-<span class="o">}</span></code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Die Klasse Person erweitert PanacheEntity, wodurch Quarkus automatisch CRUD-Operationen für diese Entität bereitstellt.</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_erstellen_eines_rest_endpunkts"><a class="anchor" href="#_erstellen_eines_rest_endpunkts"></a>6. Erstellen eines REST Endpunkts</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Erstelle nun einen REST-Endpunkt, um die Entitäten über eine API verfügbar zu machen. Erstelle die Datei src/main/java/com/example/resource/PersonResource.java:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="rouge highlight"><code data-lang="java"><span class="kn">package</span> <span class="nn">com.example.resource</span><span class="o">;</span>
-
-<span class="kn">import</span> <span class="nn">com.example.model.Person</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">javax.ws.rs.GET</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">javax.ws.rs.Path</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">javax.ws.rs.Produces</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">javax.ws.rs.core.MediaType</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">javax.ws.rs.core.Response</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">javax.inject.Inject</span><span class="o">;</span>
-
-<span class="nd">@Path</span><span class="o">(</span><span class="s">"/persons"</span><span class="o">)</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">PersonResource</span> <span class="o">{</span>
-
-    <span class="nd">@Inject</span>
-    <span class="nc">PersonRepository</span> <span class="n">personRepository</span><span class="o">;</span>
-
-    <span class="nd">@GET</span>
-    <span class="nd">@Path</span><span class="o">(</span><span class="s">"/all"</span><span class="o">)</span>
-    <span class="nd">@Produces</span><span class="o">(</span><span class="nc">MediaType</span><span class="o">.</span><span class="na">APPLICATION_JSON</span><span class="o">)</span>
-    <span class="kd">public</span> <span class="nc">Response</span> <span class="nf">getAllPersons</span><span class="o">()</span> <span class="o">{</span>
-        <span class="k">if</span> <span class="o">(</span><span class="n">personRepository</span><span class="o">.</span><span class="na">count</span><span class="o">()</span> <span class="o">==</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
-            <span class="k">return</span> <span class="nc">Response</span><span class="o">.</span><span class="na">status</span><span class="o">(</span><span class="nc">Response</span><span class="o">.</span><span class="na">Status</span><span class="o">.</span><span class="na">NOT_FOUND</span><span class="o">).</span><span class="na">build</span><span class="o">();</span>
-        <span class="o">}</span>
-        <span class="k">return</span> <span class="nc">Response</span><span class="o">.</span><span class="na">ok</span><span class="o">(</span><span class="n">personRepository</span><span class="o">.</span><span class="na">findAll</span><span class="o">()).</span><span class="na">build</span><span class="o">();</span>
-    <span class="o">}</span>
-<span class="o">}</span></code></pre>
-</div>
-</div>
-<details>
-<summary class="title">Erklärung:</summary>
-<div class="content">
-<div class="paragraph">
-<p>Dieser Endpunkt liefert alle Person-Entitäten als JSON zurück.</p>
-</div>
-</div>
-</details>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_optional_datenbank_mit_databaseseed_initialisieren"><a class="anchor" href="#_optional_datenbank_mit_databaseseed_initialisieren"></a>7. Optional: Datenbank mit DatabaseSeed initialisieren</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Um einige Daten beim Start der Anwendung zu erstellen,
-kannst du eine DatabaseSeed-Klasse hinzufügen,
-die beim Start der Anwendung Daten in die Datenbank einfügt.</p>
-</div>
-<div class="paragraph">
-<p>Erstelle die Datei src/main/java/com/example/DatabaseSeed.java:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="rouge highlight"><code data-lang="java"><table class="linenotable"><tbody><tr><td class="linenos gl"><pre class="lineno"> 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-</pre></td><td class="code"><pre><span class="kn">package</span> <span class="nn">com.example</span><span class="o">;</span>
-
-<span class="kn">import</span> <span class="nn">com.example.model.Person</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">io.quarkus.runtime.StartupEvent</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">javax.enterprise.context.ApplicationScoped</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">javax.enterprise.event.Observes</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">javax.inject.Inject</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">javax.transaction.Transactional</span><span class="o">;</span>
-
-<span class="nd">@ApplicationScoped</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">DatabaseSeed</span> <span class="o">{</span>
-
-    <span class="nd">@Inject</span>
-    <span class="nc">PersonRepository</span> <span class="n">personRepository</span><span class="o">;</span>
-
-    <span class="nd">@Transactional</span>
-    <span class="kt">void</span> <span class="nf">onStart</span><span class="o">(</span><span class="nd">@Observes</span> <span class="nc">StartupEvent</span> <span class="n">ev</span><span class="o">)</span> <span class="o">{</span>
-        <span class="k">if</span> <span class="o">(</span><span class="n">personRepository</span><span class="o">.</span><span class="na">count</span><span class="o">()</span> <span class="o">==</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
-            <span class="n">personRepository</span><span class="o">.</span><span class="na">persist</span><span class="o">(</span><span class="k">new</span> <span class="nc">Person</span><span class="o">(</span><span class="s">"John"</span><span class="o">,</span> <span class="s">"Doe"</span><span class="o">,</span> <span class="s">"john.doe@example.com"</span><span class="o">));</span>
-            <span class="n">personRepository</span><span class="o">.</span><span class="na">persist</span><span class="o">(</span><span class="k">new</span> <span class="nc">Person</span><span class="o">(</span><span class="s">"Jane"</span><span class="o">,</span> <span class="s">"Doe"</span><span class="o">,</span> <span class="s">"jane.doe@example.com"</span><span class="o">));</span>
-        <span class="o">}</span>
-    <span class="o">}</span>
-<span class="o">}</span>
-</pre></td></tr></tbody></table></code></pre>
-</div>
-</div>
-<details>
-<summary class="title">Erklärung:</summary>
-<div class="content">
-<div class="paragraph">
-<p>Diese Klasse fügt beim Start der Anwendung einige
-Person-Entitäten hinzu, wenn noch keine vorhanden sind.</p>
-</div>
-</div>
-</details>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_anwendung_starten"><a class="anchor" href="#_anwendung_starten"></a>8. Anwendung starten</h2>
-<div class="sectionbody">
-<div class="literalblock">
-<div class="content">
-<pre>mvn quarkus:dev</pre>
-</div>
-</div>
-<details>
-<summary class="title">Result</summary>
-<div class="content">
-<div class="imageblock">
-<div class="content">
-<img src="images/images/img_2.png" alt="img 2">
-</div>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="images/images/img_1.png" alt="img 1">
-</div>
-</div>
-</div>
-</details>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_zusammenfassung"><a class="anchor" href="#_zusammenfassung"></a>9. Zusammenfassung</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>In dieser Anleitung haben wir eine Quarkus-Anwendung
-mit einer PostgreSQL-Datenbank erstellt,
-die von Quarkus Dev Services automatisch verwaltet wird.
-Wir haben eine einfache REST-API erstellt,
-um mit der Datenbank zu interagieren, und beim Start der Anwendung einige Daten eingefügt.
-Die Verwendung von Dev Services macht das Setup der Datenbank sehr einfach, ohne dass du manuell Docker-Container oder PostgreSQL installieren musst.</p>
-</div>
-</div>
-</div>
-<h1 id="_continuous_testing" class="sect0"><a class="anchor" href="#_continuous_testing"></a>Continuous Testing</h1>
-<div class="sect1">
-<h2 id="_was_ist_continuous_testing"><a class="anchor" href="#_was_ist_continuous_testing"></a>10. Was ist Continuous Testing?</h2>
+<h2 id="_was_ist_continuous_testing"><a class="anchor" href="#_was_ist_continuous_testing"></a>1. Was ist Continuous Testing?</h2>
 <div class="sectionbody">
 <div class="quoteblock">
 <blockquote>
 <div class="paragraph">
-<p>Unter Continuous Testing versteht man einen Prozess, bei dem automatisiertes Feedback in verschiedenen Phasen des Softwareentwicklungslebenszyklus (Software Development Life Cycle, SDLC) integriert wird, um die Geschwindigkeit und Effizienz bei der Verwaltung von Bereitstellungen zu verbessern.</p>
+<p>Unter Continuous Testing versteht man einen Prozess, bei dem automatisiertes Feedback in verschiedenen Phasen
+des Softwareentwicklungslebenszyklus (Software Development Life Cycle, SDLC) integriert wird,
+um die Geschwindigkeit und Effizienz bei der Verwaltung von Bereitstellungen zu verbessern.</p>
 </div>
 </blockquote>
 <div class="attribution">
@@ -994,7 +646,7 @@ Die Verwendung von Dev Services macht das Setup der Datenbank sehr einfach, ohne
 </div>
 </div>
 <div class="sect1">
-<h2 id="_hauptkomponenten_von_continuous_testing"><a class="anchor" href="#_hauptkomponenten_von_continuous_testing"></a>11. Hauptkomponenten von Continuous Testing</h2>
+<h2 id="_hauptkomponenten_von_continuous_testing"><a class="anchor" href="#_hauptkomponenten_von_continuous_testing"></a>2. Hauptkomponenten von Continuous Testing</h2>
 <div class="sectionbody">
 <div class="ulist">
 <ul>
@@ -1012,7 +664,7 @@ Die Verwendung von Dev Services macht das Setup der Datenbank sehr einfach, ohne
 </div>
 </div>
 <div class="sect1">
-<h2 id="_continuous_testing_vs_automated_testing"><a class="anchor" href="#_continuous_testing_vs_automated_testing"></a>12. Continuous Testing vs Automated Testing</h2>
+<h2 id="_continuous_testing_vs_automated_testing"><a class="anchor" href="#_continuous_testing_vs_automated_testing"></a>3. Continuous Testing vs Automated Testing</h2>
 <div class="sectionbody">
 <div class="imageblock">
 <div class="content">
@@ -1022,7 +674,7 @@ Die Verwendung von Dev Services macht das Setup der Datenbank sehr einfach, ohne
 </div>
 </div>
 <div class="sect1">
-<h2 id="_arten_von_tests_im_continuous_testing"><a class="anchor" href="#_arten_von_tests_im_continuous_testing"></a>13. Arten von Tests im Continuous Testing</h2>
+<h2 id="_arten_von_tests_im_continuous_testing"><a class="anchor" href="#_arten_von_tests_im_continuous_testing"></a>4. Arten von Tests im Continuous Testing</h2>
 <div class="sectionbody">
 <div class="ulist">
 <ul>
@@ -1049,7 +701,7 @@ Die Verwendung von Dev Services macht das Setup der Datenbank sehr einfach, ohne
 </div>
 </div>
 <div class="sect1">
-<h2 id="_herausforderungen_beim_continuous_testing"><a class="anchor" href="#_herausforderungen_beim_continuous_testing"></a>14. Herausforderungen beim Continuous Testing</h2>
+<h2 id="_herausforderungen_beim_continuous_testing"><a class="anchor" href="#_herausforderungen_beim_continuous_testing"></a>5. Herausforderungen beim Continuous Testing</h2>
 <div class="sectionbody">
 <div class="ulist">
 <ul>
@@ -1073,7 +725,7 @@ Die Verwendung von Dev Services macht das Setup der Datenbank sehr einfach, ohne
 </div>
 </div>
 <div class="sect1">
-<h2 id="_überblick_testframeworks_und_ihre_einsatzbereiche"><a class="anchor" href="#_überblick_testframeworks_und_ihre_einsatzbereiche"></a>15. Überblick: Testframeworks und ihre Einsatzbereiche</h2>
+<h2 id="_überblick_testframeworks_und_ihre_einsatzbereiche"><a class="anchor" href="#_überblick_testframeworks_und_ihre_einsatzbereiche"></a>6. Überblick: Testframeworks und ihre Einsatzbereiche</h2>
 <div class="sectionbody">
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
@@ -1154,15 +806,19 @@ Die Verwendung von Dev Services macht das Setup der Datenbank sehr einfach, ohne
 </div>
 </div>
 <div class="sect1">
-<h2 id="_continuous_testing_in_quarkus"><a class="anchor" href="#_continuous_testing_in_quarkus"></a>16. Continuous Testing in Quarkus</h2>
+<h2 id="_continuous_testing_in_quarkus"><a class="anchor" href="#_continuous_testing_in_quarkus"></a>7. Continuous Testing in Quarkus</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Quarkus unterstützt Continuous Testing, eine Funktion, die es ermöglicht, Tests unmittelbar nach dem Speichern von Codeänderungen auszuführen. Dies beschleunigt den Entwicklungsprozess erheblich, da Entwickler sofortiges Feedback zu ihren Änderungen erhalten.</p>
+<p>Quarkus unterstützt Continuous Testing,
+eine Funktion, die es ermöglicht,
+Tests unmittelbar nach dem Speichern von Codeänderungen auszuführen.
+Dies beschleunigt den Entwicklungsprozess erheblich,
+da Entwickler sofortiges Feedback zu ihren Änderungen erhalten.</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_funktionsweise_von_continuous_testing_in_quarkus"><a class="anchor" href="#_funktionsweise_von_continuous_testing_in_quarkus"></a>17. Funktionsweise von Continuous Testing in Quarkus</h2>
+<h2 id="_funktionsweise_von_continuous_testing_in_quarkus"><a class="anchor" href="#_funktionsweise_von_continuous_testing_in_quarkus"></a>8. Funktionsweise von Continuous Testing in Quarkus</h2>
 <div class="sectionbody">
 <div class="ulist">
 <ul>
@@ -1226,7 +882,7 @@ Verschiedene Befehle stehen zur Verfügung, um das Testen effizient zu steuern:<
 <p>Mit diesen Funktionen unterstützt Quarkus eine schnelle Rückmeldung während der Entwicklung und erleichtert das kontinuierliche Testen.</p>
 </div>
 <div class="sect2">
-<h3 id="_guide_und_weiterführende_informationen"><a class="anchor" href="#_guide_und_weiterführende_informationen"></a>17.1. Guide und weiterführende Informationen</h3>
+<h3 id="_guide_und_weiterführende_informationen"><a class="anchor" href="#_guide_und_weiterführende_informationen"></a>8.1. Guide und weiterführende Informationen</h3>
 <div class="ulist">
 <ul>
 <li>
@@ -1244,7 +900,7 @@ Verschiedene Befehle stehen zur Verfügung, um das Testen effizient zu steuern:<
 </div>
 </div>
 <div class="sect1">
-<h2 id="_demo"><a class="anchor" href="#_demo"></a>18. Demo</h2>
+<h2 id="_demo"><a class="anchor" href="#_demo"></a>9. Demo</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Im Repository <a href="https://github.com/2425-5bhif-wmc/01-referate-balintb4">01-referate-balintb4</a> finden Sie neben dieser Dokumentation zwei Demo-Projekte.</p>
@@ -1263,7 +919,7 @@ Verschiedene Befehle stehen zur Verfügung, um das Testen effizient zu steuern:<
 </ul>
 </div>
 <div class="sect2">
-<h3 id="_hauptunterschiede_in_der_github_actions_konfiguration"><a class="anchor" href="#_hauptunterschiede_in_der_github_actions_konfiguration"></a>18.1. Hauptunterschiede in der GitHub Actions Konfiguration</h3>
+<h3 id="_hauptunterschiede_in_der_github_actions_konfiguration"><a class="anchor" href="#_hauptunterschiede_in_der_github_actions_konfiguration"></a>9.1. Hauptunterschiede in der GitHub Actions Konfiguration</h3>
 <div class="paragraph">
 <p>Der Hauptunterschied zwischen den beiden Projekten liegt in der Art und Weise, wie die PostgreSQL-Datenbank für die Tests bereitgestellt wird. Das Projekt <code>continuous-testing-demo</code> erfordert manuelle Schritte, die im Folgenden in der Workflow-Datei dargestellt sind:</p>
 </div>
@@ -1404,7 +1060,7 @@ Verschiedene Befehle stehen zur Verfügung, um das Testen effizient zu steuern:<
 </div>
 </div>
 <div class="sect1">
-<h2 id="_fazit"><a class="anchor" href="#_fazit"></a>19. Fazit</h2>
+<h2 id="_fazit"><a class="anchor" href="#_fazit"></a>10. Fazit</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Continuous Testing ist ein mächtiger Ansatz, um die Qualität von Software zu verbessern und die Entwicklungszeit zu verkürzen. Durch die Automatisierung von Tests und die Integration in CI/CD-Pipelines wird sichergestellt, dass Fehler frühzeitig erkannt und behoben werden können. Quarkus bietet mit seinem Continuous-Testing-Feature eine hervorragende Unterstützung für diesen Ansatz.</p>
@@ -1412,10 +1068,10 @@ Verschiedene Befehle stehen zur Verfügung, um das Testen effizient zu steuern:<
 </div>
 </div>
 <div class="sect1">
-<h2 id="_anhang"><a class="anchor" href="#_anhang"></a>20. Anhang</h2>
+<h2 id="_anhang"><a class="anchor" href="#_anhang"></a>11. Anhang</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="_glossar"><a class="anchor" href="#_glossar"></a>20.1. Glossar</h3>
+<h3 id="_glossar"><a class="anchor" href="#_glossar"></a>11.1. Glossar</h3>
 <div class="ulist">
 <ul>
 <li>
@@ -1443,7 +1099,7 @@ Verschiedene Befehle stehen zur Verfügung, um das Testen effizient zu steuern:<
 </div>
 </div>
 <div class="sect2">
-<h3 id="_häufig_gestellte_fragen_faq"><a class="anchor" href="#_häufig_gestellte_fragen_faq"></a>20.2. Häufig gestellte Fragen (FAQ)</h3>
+<h3 id="_häufig_gestellte_fragen_faq"><a class="anchor" href="#_häufig_gestellte_fragen_faq"></a>11.2. Häufig gestellte Fragen (FAQ)</h3>
 <div class="ulist">
 <ul>
 <li>
@@ -1466,6 +1122,486 @@ Verschiedene Befehle stehen zur Verfügung, um das Testen effizient zu steuern:<
 </li>
 </ul>
 </div>
+</div>
+</div>
+</div>
+<h1 id="_quarkus_anwendung_mit_postgresql_und_dev_services" class="sect0"><a class="anchor" href="#_quarkus_anwendung_mit_postgresql_und_dev_services"></a>Quarkus-Anwendung mit PostgreSQL und Dev Services</h1>
+<div class="sect1">
+<h2 id="_einleitung"><a class="anchor" href="#_einleitung"></a>12. Einleitung</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_was_sind_devservices"><a class="anchor" href="#_was_sind_devservices"></a>12.1. Was sind Devservices?</h3>
+<div class="paragraph">
+<p>Quarkus Dev Services sind eine neue
+Funktion von Quarkus, die es
+Entwicklern ermöglicht, bestimmte
+Entwicklungsdienste (wie Datenbanken, Message-Broker oder andere Infrastrukturkomponenten)
+automatisch und ohne zusätzliche manuelle Einrichtung zu starten.
+Diese Dienste laufen in Containern (normalerweise über Docker oder Podman) und werden nahtlos in die Entwicklungsumgebung integriert.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_vorteile_von_quarkus_dev_services"><a class="anchor" href="#_vorteile_von_quarkus_dev_services"></a>12.2. Vorteile von Quarkus Dev Services</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Automatisches Setup:</strong></p>
+<div class="ulist">
+<ul>
+<li>
+<p>Dev Services starten automatisch die benötigten Dienste, z. B. eine Datenbank, sobald die Anwendung sie braucht.</p>
+</li>
+<li>
+<p>Dadurch sparst man Zeit und musst man keine separaten Container oder Konfigurationen manuell einrichten.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Nahtlose Integration:</strong></p>
+<div class="ulist">
+<ul>
+<li>
+<p>Die gestarteten Dienste sind direkt in die Anwendung eingebunden und werden automatisch mit den passenden Konfigurationswerten versorgt.</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_dienste_die_von_quarkus_dev_services_unterstützt_werden"><a class="anchor" href="#_dienste_die_von_quarkus_dev_services_unterstützt_werden"></a>12.3. Dienste, die von Quarkus Dev Services unterstützt werden</h3>
+<div class="sect3">
+<h4 id="_datenbanken"><a class="anchor" href="#_datenbanken"></a>12.3.1. Datenbanken</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>PostgreSQL</p>
+</li>
+<li>
+<p>MySQL/MariaDB</p>
+</li>
+<li>
+<p>MongoDB</p>
+</li>
+<li>
+<p>Oracle Database</p>
+</li>
+<li>
+<p>H2</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_message_broker"><a class="anchor" href="#_message_broker"></a>12.3.2. Message Broker</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Kafka</p>
+</li>
+<li>
+<p>RabbitMQ</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_cachekey_value_stores"><a class="anchor" href="#_cachekey_value_stores"></a>12.3.3. Cache/Key-Value Stores</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Redis</p>
+</li>
+<li>
+<p>Infinispan</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_testing"><a class="anchor" href="#_testing"></a>12.3.4. Testing</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>WireMock (für API-Mocking)</p>
+</li>
+<li>
+<p>Testcontainers (für Container-basierte Tests)</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_monitoringtracing"><a class="anchor" href="#_monitoringtracing"></a>12.3.5. Monitoring/Tracing</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Prometheus</p>
+</li>
+<li>
+<p>Jaeger (für Distributed Tracing)</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_voraussetzungen"><a class="anchor" href="#_voraussetzungen"></a>13. Voraussetzungen</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Bevor du beginnst, stelle sicher, dass du die folgenden Tools installiert hast:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Java 17</strong> oder höher</p>
+</li>
+<li>
+<p><strong>Maven</strong></p>
+</li>
+<li>
+<p><strong>Docker</strong> (für die Ausführung von Dev Services)</p>
+</li>
+<li>
+<p><strong>PostgreSQL</strong> (für den direkten Zugriff, wenn nötig)</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_projekt_erstellen"><a class="anchor" href="#_projekt_erstellen"></a>14. Projekt erstellen</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Erstellen Sie ein neues Quarkus-Projekt mit den notwendigen Erweiterungen, indem Sie den folgenden Befehl in Ihrem Terminal ausführen:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="bash">mvn io.quarkus.platform:quarkus-maven-plugin:3.6.4:create <span class="se">\</span>
+    <span class="nt">-DprojectGroupId</span><span class="o">=</span>com.example <span class="se">\</span>
+    <span class="nt">-DprojectArtifactId</span><span class="o">=</span>quarkus-postgres-app <span class="se">\</span>
+    <span class="nt">-DclassName</span><span class="o">=</span><span class="s2">"com.example.resource.PersonResource"</span> <span class="se">\</span>
+    <span class="nt">-Dextensions</span><span class="o">=</span><span class="s2">"resteasy-jackson,hibernate-orm-panache,jdbc-postgresql"</span>
+<span class="nb">cd </span>quarkus-postgres-app</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Dieser Befehl erstellt ein neues Quarkus-Projekt mit:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>resteasy-jackson</code>: Für die Serialisierung und Deserialisierung von JSON in den REST-Endpunkten.</p>
+</li>
+<li>
+<p><code>hibernate-orm-panache</code>: Für die Datenbankinteraktion mit Panache.</p>
+</li>
+<li>
+<p><code>jdbc-postgresql</code>: Für die Verbindung zur PostgreSQL-Datenbank.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_abhängigkeiten"><a class="anchor" href="#_abhängigkeiten"></a>15. Abhängigkeiten</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Stelle sicher, dass die folgenden Abhängigkeiten
+in deiner pom.xml (für Maven) enthalten sind:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="xml"><span class="nt">&lt;dependencies&gt;</span>
+<span class="c">&lt;!-- Quarkus RESTEasy für REST APIs --&gt;</span>
+<span class="nt">&lt;dependency&gt;</span>
+<span class="nt">&lt;groupId&gt;</span>io.quarkus<span class="nt">&lt;/groupId&gt;</span>
+<span class="nt">&lt;artifactId&gt;</span>quarkus-resteasy<span class="nt">&lt;/artifactId&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+
+    <span class="c">&lt;!-- Quarkus Hibernate ORM für die Datenbankintegration --&gt;</span>
+    <span class="nt">&lt;dependency&gt;</span>
+        <span class="nt">&lt;groupId&gt;</span>io.quarkus<span class="nt">&lt;/groupId&gt;</span>
+        <span class="nt">&lt;artifactId&gt;</span>quarkus-hibernate-orm-panache<span class="nt">&lt;/artifactId&gt;</span>
+    <span class="nt">&lt;/dependency&gt;</span>
+
+    <span class="c">&lt;!-- PostgreSQL JDBC-Treiber --&gt;</span>
+    <span class="nt">&lt;dependency&gt;</span>
+        <span class="nt">&lt;groupId&gt;</span>org.postgresql<span class="nt">&lt;/groupId&gt;</span>
+        <span class="nt">&lt;artifactId&gt;</span>postgresql<span class="nt">&lt;/artifactId&gt;</span>
+    <span class="nt">&lt;/dependency&gt;</span>
+<span class="nt">&lt;/dependencies&gt;</span></code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_konfiguration_der_postgresql_datenbank"><a class="anchor" href="#_konfiguration_der_postgresql_datenbank"></a>16. Konfiguration der PostgreSQL-Datenbank</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Quarkus Dev Services
+wird automatisch eine PostgreSQL-Datenbank für dich starten.
+Du musst jedoch die Verbindungsdetails in der Konfiguration festlegen.
+Öffne die Datei <code>src/main/resources/application.properties</code>
+und füge die folgenden Konfigurationen hinzu:</p>
+</div>
+<div class="sect2">
+<h3 id="_quarkus_datenbank_konfiguration"><a class="anchor" href="#_quarkus_datenbank_konfiguration"></a>16.1. Quarkus Datenbank Konfiguration</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="properties"><span class="py">quarkus.datasource.db-kind</span><span class="p">=</span><span class="s">postgresql </span><i class="conum" data-value="1"></i><b>(1)</b>
+<span class="py">quarkus.datasource.username</span><span class="p">=</span><span class="s">your_username </span><i class="conum" data-value="2"></i><b>(2)</b>
+<span class="py">quarkus.datasource.password</span><span class="p">=</span><span class="s">your_password </span><i class="conum" data-value="3"></i><b>(3)</b>
+
+<span class="py">quarkus.hibernate-orm.database.generation</span><span class="p">=</span><span class="s">update </span><i class="conum" data-value="4"></i><b>(4)</b>
+<span class="py">quarkus.hibernate-orm.log.sql</span><span class="p">=</span><span class="s">true </span><i class="conum" data-value="5"></i><b>(5)</b>
+<span class="py">quarkus.hibernate-orm.log.format-sql</span><span class="p">=</span><span class="s">true </span><i class="conum" data-value="6"></i><b>(6)</b>
+
+<span class="py">quarkus.datasource.devservices.enabled</span><span class="p">=</span><span class="s">true </span><i class="conum" data-value="7"></i><b>(7)</b>
+<span class="py">quarkus.datasource.devservices.image-name</span><span class="p">=</span><span class="s">postgres:latest </span><i class="conum" data-value="8"></i><b>(8)</b></code></pre>
+</div>
+</div>
+<details>
+<summary class="title">Erklärung:</summary>
+<div class="content">
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Gibt an, dass PostgreSQL als Datenbank verwendet wird.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>(Optimal) Der Benutzername für den PostgreSQL-Datenbankzugriff.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>(Optimal) Das Passwort für den PostgreSQL-Datenbankzugriff.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>(Optimal) Sagt Hibernate, dass es die Datenbankstruktur beim Start aktualisieren soll.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td>(Optimal) Aktiviert das SQL-Logging, damit SQL-Abfragen im Log sichtbar sind.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="6"></i><b>6</b></td>
+<td>(Optimal) Formatiert SQL-Abfragen für bessere Lesbarkeit im Log.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="7"></i><b>7</b></td>
+<td>Aktiviert Dev Services, die eine Datenbank im Docker-Container starten.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="8"></i><b>8</b></td>
+<td>Gibt das Docker-Image für PostgreSQL an, das verwendet werden soll.</td>
+</tr>
+</table>
+</div>
+</div>
+</details>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_erstellen_der_person_entität"><a class="anchor" href="#_erstellen_der_person_entität"></a>17. Erstellen der <code>Person</code>-Entität</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Nun erstellst du eine Entität, die du in der Datenbank speichern möchtest.
+Erstelle die Datei <code>src/main/java/com/example/model/Person.java</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="java"><span class="kn">package</span> <span class="nn">com.example.model</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">io.quarkus.hibernate.orm.panache.PanacheEntity</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">javax.persistence.Entity</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">javax.persistence.Table</span><span class="o">;</span>
+
+<span class="nd">@Entity</span>
+<span class="nd">@Table</span><span class="o">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">"person"</span><span class="o">)</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Person</span> <span class="kd">extends</span> <span class="nc">PanacheEntity</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="nc">String</span> <span class="n">firstName</span><span class="o">;</span>
+    <span class="kd">public</span> <span class="nc">String</span> <span class="n">lastName</span><span class="o">;</span>
+    <span class="kd">public</span> <span class="nc">String</span> <span class="n">email</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="nf">Person</span><span class="o">()</span> <span class="o">{</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="nf">Person</span><span class="o">(</span><span class="nc">String</span> <span class="n">firstName</span><span class="o">,</span> <span class="nc">String</span> <span class="n">lastName</span><span class="o">,</span> <span class="nc">String</span> <span class="n">email</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">firstName</span> <span class="o">=</span> <span class="n">firstName</span><span class="o">;</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">lastName</span> <span class="o">=</span> <span class="n">lastName</span><span class="o">;</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">email</span> <span class="o">=</span> <span class="n">email</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Die Klasse Person erweitert PanacheEntity, wodurch Quarkus automatisch CRUD-Operationen für diese Entität bereitstellt.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_erstellen_eines_rest_endpunkts"><a class="anchor" href="#_erstellen_eines_rest_endpunkts"></a>18. Erstellen eines REST Endpunkts</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Erstelle nun einen REST-Endpunkt, um die Entitäten über eine API verfügbar zu machen. Erstelle die Datei src/main/java/com/example/resource/PersonResource.java:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="java"><span class="kn">package</span> <span class="nn">com.example.resource</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">com.example.model.Person</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">javax.ws.rs.GET</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">javax.ws.rs.Path</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">javax.ws.rs.Produces</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">javax.ws.rs.core.MediaType</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">javax.ws.rs.core.Response</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">javax.inject.Inject</span><span class="o">;</span>
+
+<span class="nd">@Path</span><span class="o">(</span><span class="s">"/persons"</span><span class="o">)</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">PersonResource</span> <span class="o">{</span>
+
+    <span class="nd">@Inject</span>
+    <span class="nc">PersonRepository</span> <span class="n">personRepository</span><span class="o">;</span>
+
+    <span class="nd">@GET</span>
+    <span class="nd">@Path</span><span class="o">(</span><span class="s">"/all"</span><span class="o">)</span>
+    <span class="nd">@Produces</span><span class="o">(</span><span class="nc">MediaType</span><span class="o">.</span><span class="na">APPLICATION_JSON</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="nc">Response</span> <span class="nf">getAllPersons</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">personRepository</span><span class="o">.</span><span class="na">count</span><span class="o">()</span> <span class="o">==</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">return</span> <span class="nc">Response</span><span class="o">.</span><span class="na">status</span><span class="o">(</span><span class="nc">Response</span><span class="o">.</span><span class="na">Status</span><span class="o">.</span><span class="na">NOT_FOUND</span><span class="o">).</span><span class="na">build</span><span class="o">();</span>
+        <span class="o">}</span>
+        <span class="k">return</span> <span class="nc">Response</span><span class="o">.</span><span class="na">ok</span><span class="o">(</span><span class="n">personRepository</span><span class="o">.</span><span class="na">findAll</span><span class="o">()).</span><span class="na">build</span><span class="o">();</span>
+    <span class="o">}</span>
+<span class="o">}</span></code></pre>
+</div>
+</div>
+<details>
+<summary class="title">Erklärung:</summary>
+<div class="content">
+<div class="paragraph">
+<p>Dieser Endpunkt liefert alle Person-Entitäten als JSON zurück.</p>
+</div>
+</div>
+</details>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_optional_datenbank_mit_databaseseed_initialisieren"><a class="anchor" href="#_optional_datenbank_mit_databaseseed_initialisieren"></a>19. Optional: Datenbank mit DatabaseSeed initialisieren</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Um einige Daten beim Start der Anwendung zu erstellen,
+kannst du eine DatabaseSeed-Klasse hinzufügen,
+die beim Start der Anwendung Daten in die Datenbank einfügt.</p>
+</div>
+<div class="paragraph">
+<p>Erstelle die Datei src/main/java/com/example/DatabaseSeed.java:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="java"><table class="linenotable"><tbody><tr><td class="linenos gl"><pre class="lineno"> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+</pre></td><td class="code"><pre><span class="kn">package</span> <span class="nn">com.example</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">com.example.model.Person</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">io.quarkus.runtime.StartupEvent</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">javax.enterprise.context.ApplicationScoped</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">javax.enterprise.event.Observes</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">javax.inject.Inject</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">javax.transaction.Transactional</span><span class="o">;</span>
+
+<span class="nd">@ApplicationScoped</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">DatabaseSeed</span> <span class="o">{</span>
+
+    <span class="nd">@Inject</span>
+    <span class="nc">PersonRepository</span> <span class="n">personRepository</span><span class="o">;</span>
+
+    <span class="nd">@Transactional</span>
+    <span class="kt">void</span> <span class="nf">onStart</span><span class="o">(</span><span class="nd">@Observes</span> <span class="nc">StartupEvent</span> <span class="n">ev</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">personRepository</span><span class="o">.</span><span class="na">count</span><span class="o">()</span> <span class="o">==</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">personRepository</span><span class="o">.</span><span class="na">persist</span><span class="o">(</span><span class="k">new</span> <span class="nc">Person</span><span class="o">(</span><span class="s">"John"</span><span class="o">,</span> <span class="s">"Doe"</span><span class="o">,</span> <span class="s">"john.doe@example.com"</span><span class="o">));</span>
+            <span class="n">personRepository</span><span class="o">.</span><span class="na">persist</span><span class="o">(</span><span class="k">new</span> <span class="nc">Person</span><span class="o">(</span><span class="s">"Jane"</span><span class="o">,</span> <span class="s">"Doe"</span><span class="o">,</span> <span class="s">"jane.doe@example.com"</span><span class="o">));</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></td></tr></tbody></table></code></pre>
+</div>
+</div>
+<details>
+<summary class="title">Erklärung:</summary>
+<div class="content">
+<div class="paragraph">
+<p>Diese Klasse fügt beim Start der Anwendung einige
+Person-Entitäten hinzu, wenn noch keine vorhanden sind.</p>
+</div>
+</div>
+</details>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_anwendung_starten"><a class="anchor" href="#_anwendung_starten"></a>20. Anwendung starten</h2>
+<div class="sectionbody">
+<div class="literalblock">
+<div class="content">
+<pre>mvn quarkus:dev</pre>
+</div>
+</div>
+<details>
+<summary class="title">Result</summary>
+<div class="content">
+<div class="imageblock">
+<div class="content">
+<img src="images/images/img_2.png" alt="img 2">
+</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/images/img_1.png" alt="img 1">
+</div>
+</div>
+</div>
+</details>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_zusammenfassung"><a class="anchor" href="#_zusammenfassung"></a>21. Zusammenfassung</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>In dieser Anleitung haben wir eine Quarkus-Anwendung
+mit einer PostgreSQL-Datenbank erstellt,
+die von Quarkus Dev Services automatisch verwaltet wird.
+Wir haben eine einfache REST-API erstellt,
+um mit der Datenbank zu interagieren, und beim Start der Anwendung einige Daten eingefügt.
+Die Verwendung von Dev Services macht das Setup der Datenbank sehr einfach, ohne dass du manuell Docker-Container oder PostgreSQL installieren musst.</p>
 </div>
 </div>
 </div>
