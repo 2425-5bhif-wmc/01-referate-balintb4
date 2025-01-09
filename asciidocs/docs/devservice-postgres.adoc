@@ -25,7 +25,7 @@ Diese Dienste laufen in Containern (normalerweise über Docker oder Podman) und 
 
 * **Automatisches Setup:**
 - Dev Services starten automatisch die benötigten Dienste, z. B. eine Datenbank, sobald die Anwendung sie braucht.
-- Dadurch sparst man Zeit und musst man keine separaten Container oder Konfigurationen manuell einrichten.
+- Dadurch spart man Zeit und musst man keine separaten Container oder Konfigurationen manuell einrichten.
 
 * **Nahtlose Integration:**
 - Die gestarteten Dienste sind direkt in die Anwendung eingebunden und werden automatisch mit den passenden Konfigurationswerten versorgt.
