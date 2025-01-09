@@ -14,7 +14,9 @@
 
 [quote, IBM, "Was sind kontinuierliche Tests?"]
 ____
-Unter Continuous Testing versteht man einen Prozess, bei dem automatisiertes Feedback in verschiedenen Phasen des Softwareentwicklungslebenszyklus (Software Development Life Cycle, SDLC) integriert wird, um die Geschwindigkeit und Effizienz bei der Verwaltung von Bereitstellungen zu verbessern.
+Unter Continuous Testing versteht man einen Prozess, bei dem automatisiertes Feedback in verschiedenen Phasen
+des Softwareentwicklungslebenszyklus (Software Development Life Cycle, SDLC) integriert wird,
+um die Geschwindigkeit und Effizienz bei der Verwaltung von Bereitstellungen zu verbessern.
 ____
 
 image::images/continuos-testing.png[Continuous Testing Workflow, 800, 450]
@@ -103,7 +105,11 @@ image::images/continuous-testing-vs-automated-testing.png[Continuous Testing vs 
 
 == Continuous Testing in Quarkus
 
-Quarkus unterstützt Continuous Testing, eine Funktion, die es ermöglicht, Tests unmittelbar nach dem Speichern von Codeänderungen auszuführen. Dies beschleunigt den Entwicklungsprozess erheblich, da Entwickler sofortiges Feedback zu ihren Änderungen erhalten.
+Quarkus unterstützt Continuous Testing,
+eine Funktion, die es ermöglicht,
+Tests unmittelbar nach dem Speichern von Codeänderungen auszuführen.
+Dies beschleunigt den Entwicklungsprozess erheblich,
+da Entwickler sofortiges Feedback zu ihren Änderungen erhalten.
 
 == Funktionsweise von Continuous Testing in Quarkus
 

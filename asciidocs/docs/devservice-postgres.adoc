@@ -10,6 +10,50 @@
 :source-highlighter: rouge
 :docinfo: shared
 
+== Einleitung
+
+=== Was sind Devservices?
+
+Quarkus Dev Services sind eine neue
+Funktion von Quarkus, die es
+Entwicklern ermöglicht, bestimmte
+Entwicklungsdienste (wie Datenbanken, Message-Broker oder andere Infrastrukturkomponenten)
+automatisch und ohne zusätzliche manuelle Einrichtung zu starten.
+Diese Dienste laufen in Containern (normalerweise über Docker oder Podman) und werden nahtlos in die Entwicklungsumgebung integriert.
+
+=== Vorteile von Quarkus Dev Services
+
+* **Automatisches Setup:**
+- Dev Services starten automatisch die benötigten Dienste, z. B. eine Datenbank, sobald die Anwendung sie braucht.
+- Dadurch sparst man Zeit und musst man keine separaten Container oder Konfigurationen manuell einrichten.
+
+* **Nahtlose Integration:**
+- Die gestarteten Dienste sind direkt in die Anwendung eingebunden und werden automatisch mit den passenden Konfigurationswerten versorgt.
+
+=== Dienste, die von Quarkus Dev Services unterstützt werden
+
+==== Datenbanken
+* PostgreSQL
+* MySQL/MariaDB
+* MongoDB
+* Oracle Database
+* H2
+
+==== Message Broker
+* Kafka
+* RabbitMQ
+
+==== Cache/Key-Value Stores
+* Redis
+* Infinispan
+
+==== Testing
+* WireMock (für API-Mocking)
+* Testcontainers (für Container-basierte Tests)
+
+==== Monitoring/Tracing
+* Prometheus
+* Jaeger (für Distributed Tracing)
 
 == Voraussetzungen
 
