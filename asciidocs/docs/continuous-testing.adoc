@@ -19,7 +19,7 @@ des Softwareentwicklungslebenszyklus (Software Development Life Cycle, SDLC) int
 um die Geschwindigkeit und Effizienz bei der Verwaltung von Bereitstellungen zu verbessern.
 ____
 
-image::images/continuos-testing.png[Continuous Testing Workflow, 800, 450]
+image::images/continuos-testing.png[Continuous Testing Workflow]
 
 == Hauptkomponenten von Continuous Testing
 
@@ -275,3 +275,4 @@ Continuous Testing ist ein mächtiger Ansatz, um die Qualität von Software zu v
 
 *   **Frage:** Ist Continuous Testing für jedes Projekt geeignet?
 *   **Antwort:** Continuous Testing ist besonders für Projekte mit häufigen Codeänderungen und einem hohen Automatisierungsgrad geeignet. Bei kleineren, weniger komplexen Projekten kann der Aufwand für die Implementierung den Nutzen übersteigen.
+
