@@ -5,6 +5,8 @@
 :doctype: book
 :reproducible:
 :icons: font
+:imagesdir:asciidocs/docs/images
+
 :sectnums:
 :toc:
 :source-highlighter: rouge

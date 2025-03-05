@@ -7,6 +7,7 @@
 :icons: font
 :sectnums:
 :toc:
+:imagesdir:asciidocs/docs/images
 :source-highlighter: rouge
 :docinfo: shared
 
@@ -139,11 +140,11 @@ quarkus.datasource.devservices.image-name=postgres:latest <8>
 .Erklärung:
 ====
 <1> Gibt an, dass PostgreSQL als Datenbank verwendet wird.
-<2> (Optimal) Der Benutzername für den PostgreSQL-Datenbankzugriff.
-<3>  (Optimal) Das Passwort für den PostgreSQL-Datenbankzugriff.
-<4> (Optimal) Sagt Hibernate, dass es die Datenbankstruktur beim Start aktualisieren soll.
-<5> (Optimal) Aktiviert das SQL-Logging, damit SQL-Abfragen im Log sichtbar sind.
-<6> (Optimal) Formatiert SQL-Abfragen für bessere Lesbarkeit im Log.
+<2> (Optional) Der Benutzername für den PostgreSQL-Datenbankzugriff.
+<3>  (Optional) Das Passwort für den PostgreSQL-Datenbankzugriff.
+<4> (Optional) Sagt Hibernate, dass es die Datenbankstruktur beim Start aktualisieren soll.
+<5> (Optional) Aktiviert das SQL-Logging, damit SQL-Abfragen im Log sichtbar sind.
+<6> (Optional) Formatiert SQL-Abfragen für bessere Lesbarkeit im Log.
 <7> Aktiviert Dev Services, die eine Datenbank im Docker-Container starten.
 <8> Gibt das Docker-Image für PostgreSQL an, das verwendet werden soll.
 ====
